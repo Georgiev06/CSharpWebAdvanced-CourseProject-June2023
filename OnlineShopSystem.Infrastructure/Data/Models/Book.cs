@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OnlineShopSystem.Infrastructure.Data.Models
+{
+    public class Book
+    {
+        public Book()
+        {
+            this.Reviews = new HashSet<Review>();
+            this.OrdersBooks = new HashSet<OrderBook>();
+        }
+
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        public string Name { get; set; } = null!;
+
+        [Required]
+        [MaxLength(150)]
+        public string Description { get; set; } = null!;
+
+        [Required]
+        [MaxLength(2048)]
+        public string ImageUrl { get; set; } = null!;
+
+        [Required] 
+        public decimal Price { get; set; }
+
+        [Required] 
+        public int Quantity { get; set; }
+
+        public int CategoryId { get; set; }
+
+        [ForeignKey(nameof(CategoryId))]
+        public virtual Category Category { get; set; } = null!;
+
+        [Required] 
+        public virtual ICollection<Review> Reviews { get; set; }
+
+        [Required]
+        public virtual ICollection<OrderBook> OrdersBooks { get; set; }
+    }
+}
