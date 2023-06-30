@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OnlineShopSystem.Core.Contracts;
-using OnlineShopSystem.Core.Models;
+using OnlineShopSystem.Core.Models.Book;
+using OnlineShopSystem.Core.Models.Category;
 using OnlineShopSystem.Infrastructure.Common;
 using OnlineShopSystem.Infrastructure.Data.Models;
 using OnlineShopSystem.Web.Data;
@@ -68,6 +69,46 @@ namespace OnlineShopSystem.Core.Services
             };
 
             return model;
+        }
+
+        public async Task EditBookAsync(EditBookViewModel model, int id)
+        {
+            var book = await _data.Books.FindAsync(id);
+
+            if (book != null)
+            {
+                book.Title = model.Title;
+                book.Author = model.Author;
+                book.Description = model.Description;
+                book.ImageUrl = model.ImageUrl;
+                book.Price = model.Price;
+                book.CategoryId = model.CategoryId;
+
+                await _data.SaveChangesAsync();
+            }
+        }
+
+        public async Task<EditBookViewModel?> GetBookByIdForEditAsync(int id)
+        {
+            var categories = await _data.Categories
+                .Select(c => new CategoryViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                }).ToListAsync();
+
+            return await _data.Books
+                .Where(b => b.Id == id)
+                .Select(b => new EditBookViewModel()
+                {
+                    Title = b.Title,
+                    Author = b.Author,
+                    Description = b.Description,
+                    ImageUrl = b.ImageUrl,
+                    Price = b.Price,
+                    CategoryId = b.CategoryId,
+                    Categories = categories
+                }).FirstOrDefaultAsync();
         }
     }
 }

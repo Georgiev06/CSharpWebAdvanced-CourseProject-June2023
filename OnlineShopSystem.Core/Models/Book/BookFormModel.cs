@@ -1,16 +1,15 @@
-﻿using OnlineShopSystem.Infrastructure.Common;
-using OnlineShopSystem.Infrastructure.Data.Models;
+﻿using OnlineShopSystem.Core.Models.Category;
+using OnlineShopSystem.Infrastructure.Common;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineShopSystem.Core.Models
+namespace OnlineShopSystem.Core.Models.Book
 {
-    public class AddBookViewModel
+    public class BookFormModel
     {
         [Required]
         [StringLength(EntityValidationConstants.Book.TitleMaxLength, MinimumLength = EntityValidationConstants.Book.TitleMinLength)]
@@ -35,13 +34,5 @@ namespace OnlineShopSystem.Core.Models
         public int CategoryId { get; set; }
 
         public virtual IEnumerable<CategoryViewModel> Categories { get; set; } = new List<CategoryViewModel>();
-        //[ForeignKey(nameof(CategoryId))]
-        //public virtual Category Category { get; set; } = null!;
-
-        //[Required]
-        //public virtual ICollection<Review> Reviews { get; set; }
-
-        //[Required]
-        //public virtual ICollection<OrderBook> OrdersBooks { get; set; }
     }
 }

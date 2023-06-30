@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineShopSystem.Core.Models
+namespace OnlineShopSystem.Core.Models.Book
 {
     public class AllBookViewModel
     {

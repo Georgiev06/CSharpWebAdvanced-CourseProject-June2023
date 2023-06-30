@@ -14,9 +14,9 @@ namespace OnlineShopSystem.Infrastructure.Common
             public const int TitleMinLength = 5;
 
             public const int AuthorNameMaxLength = 50;
-            public const int AuthorNameMinLength = 50;
+            public const int AuthorNameMinLength = 3;
 
-            public const int DescriptionMaxLength = 150;
+            public const int DescriptionMaxLength = 2000;
             public const int DescriptionMinLength = 10;
 
             public const int ImageUrlMaxLength = 2048;
