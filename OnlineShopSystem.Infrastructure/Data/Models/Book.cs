@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using OnlineShopSystem.Infrastructure.Common;
 
 namespace OnlineShopSystem.Infrastructure.Data.Models
 {
@@ -21,23 +22,25 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string Name { get; set; } = null!;
+        [MaxLength(EntityValidationConstants.Book.TitleMaxLength)]
+        public string Title { get; set; } = null!;
 
         [Required]
-        [MaxLength(150)]
+        [MaxLength(EntityValidationConstants.Book.AuthorNameMaxLength)]
+        public string Author { get; set; } = null!;
+
+        [Required]
+        [MaxLength(EntityValidationConstants.Book.DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
         [Required]
-        [MaxLength(2048)]
+        [MaxLength(EntityValidationConstants.Book.ImageUrlMaxLength)]
         public string ImageUrl { get; set; } = null!;
 
         [Required] 
         public decimal Price { get; set; }
 
-        [Required] 
-        public int Quantity { get; set; }
-
+        [Required]
         public int CategoryId { get; set; }
 
         [ForeignKey(nameof(CategoryId))]

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OnlineShopSystem.Core.Contracts;
+using OnlineShopSystem.Core.Services;
 using OnlineShopSystem.Infrastructure.Data.Models;
 using OnlineShopSystem.Web.Data;
 
@@ -21,12 +23,14 @@ builder.Services.AddDefaultIdentity<User>(options =>
 }).AddEntityFrameworkStores<BookShopDbContext>();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IBookService, BookService>();
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseDeveloperExceptionPage();
 }
 else
 {

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OnlineShopSystem.Infrastructure.Common;
 
 namespace OnlineShopSystem.Infrastructure.Data.Models
 {
@@ -18,7 +19,7 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(30)]
+        [MaxLength(EntityValidationConstants.Category.NameMaxLength)]
         public string Name { get; set; } = null!;
 
         [Required] 

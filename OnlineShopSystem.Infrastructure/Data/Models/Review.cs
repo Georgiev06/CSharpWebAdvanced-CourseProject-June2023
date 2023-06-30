@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OnlineShopSystem.Infrastructure.Common;
 
 namespace OnlineShopSystem.Infrastructure.Data.Models
 {
@@ -14,11 +15,11 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(10)]
+        [MaxLength(EntityValidationConstants.Review.RatingMaxLength)]
         public int Rating { get; set; }
 
         [Required]
-        [MaxLength(150)]
+        [MaxLength(EntityValidationConstants.Review.CommentMaxLength)]
         public string Comment { get; set; } = null!;
 
         [Required]

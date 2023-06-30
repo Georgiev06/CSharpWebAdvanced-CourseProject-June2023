@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<OnlineShopSystem.Core.Models.AllBookViewModel>
+
+@{
+    ViewBag.Title = "All Books";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center row">
+    @foreach (var book in Model)
+    {
+        <div class="card col-4" style="width: 20rem; ">
+            <img class="card-img-top" style="width: 18rem;"
+                 src="@book.ImageUrl" alt="Book Image">
+            <div class="card-body">
+
+                <h5 class="card-title mt-1">@book.Title</h5>
+                <p class="mb-0">Author: @book.Author</p>
+                <p class="mb-0">Author: @book.Description</p>
+                <p class="mb-0">Author: @book.Price</p>
+                <p >Category: @book.Category</p>
+            </div>
+
+            <a href="/Book/Edit/@book.Id" class="btn btn-warning">Edit</a>
+            <a href="/Book/Delete/@book.Id" class="btn btn-danger">Delete</a>
+        </div>
+    }
+</div>
+

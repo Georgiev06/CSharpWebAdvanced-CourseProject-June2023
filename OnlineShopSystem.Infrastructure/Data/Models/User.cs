@@ -6,25 +6,26 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using OnlineShopSystem.Infrastructure.Common;
 
 namespace OnlineShopSystem.Infrastructure.Data.Models
 {
     public class User : IdentityUser
     {
         [Required]
-        [MaxLength(20)]
+        [MaxLength(EntityValidationConstants.User.FirstNameMaxLength)]
         public string FirstName { get; set; } = null!;
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(EntityValidationConstants.User.LastNameMaxLength)]
         public string LastName { get; set; } = null!;
 
         [Required]
-        [MaxLength(127)]
+        [MaxLength(EntityValidationConstants.User.PasswordMaxLength)]
         public string Password { get; set; } = null!;
 
         [Required]
-        [MaxLength(95)]
+        [MaxLength(EntityValidationConstants.User.AddressMaxLength)]
         public string Address { get; set; } = null!;
     }
 }
