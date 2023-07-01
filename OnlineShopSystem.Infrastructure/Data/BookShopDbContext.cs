@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineShopSystem.Infrastructure.Data.Models;
 using System.Reflection.Emit;
+using Microsoft.AspNetCore.Identity;
 
 namespace OnlineShopSystem.Web.Data
 {
@@ -22,38 +23,55 @@ namespace OnlineShopSystem.Web.Data
 
         public DbSet<OrderBook> OrdersBooks { get; set; } = null!;
 
+        public DbSet<UserBook> UsersBooks { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-                builder.Entity<Category>()
-                .HasData(new Category()
-                {
-                    Id = 1,
-                    Name = "Fantasy"
-                },
-                new Category()
-                {
-                    Id = 2,
-                    Name = "Romance"
-                },
-                new Category()
-                {
-                    Id = 3,
-                    Name = "Westerns"
-                },
-                new Category()
-                {
-                    Id = 4,
-                    Name = "Thriller"
-                });
+            builder.Entity<Category>()
+            .HasData(new Category()
+            {
+                Id = 1,
+                Name = "Fantasy"
+            },
+            new Category()
+            {
+                Id = 2,
+                Name = "Romance"
+            },
+            new Category()
+            {
+                Id = 3,
+                Name = "Westerns"
+            },
+            new Category()
+            {
+                Id = 4,
+                Name = "Thriller"
+            });
+
 
             builder.Entity<OrderBook>()
                 .HasKey(x => new { x.BookId, x.OrderId });
+
+            builder.Entity<UserBook>()
+                .HasKey(x => new { x.BookId, x.UserId });
 
             builder.Entity<OrderBook>()
                 .HasOne(x => x.Book)
                 .WithMany(x => x.OrdersBooks)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Order>()
+                .Property(p => p.TotalAmount)
+                .HasPrecision(18, 2);
+
+            builder.Entity<Book>()
+                .Property(p => p.Price)
+                .HasPrecision(18, 2);
+
+            builder.Entity<Book>()
+                .Property(p => p.Rating)
+                .HasPrecision(18, 2);
 
             base.OnModelCreating(builder);
         }

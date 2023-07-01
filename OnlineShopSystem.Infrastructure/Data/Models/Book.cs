@@ -16,6 +16,7 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         {
             this.Reviews = new HashSet<Review>();
             this.OrdersBooks = new HashSet<OrderBook>();
+            this.UsersBooks = new HashSet<UserBook>();
         }
 
         [Key]
@@ -41,6 +42,10 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         public decimal Price { get; set; }
 
         [Required]
+        [MaxLength(EntityValidationConstants.Book.RatingMaxLength)]
+        public decimal Rating { get; set; }
+
+        [Required]
         public int CategoryId { get; set; }
 
         [ForeignKey(nameof(CategoryId))]
@@ -51,5 +56,8 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
 
         [Required]
         public virtual ICollection<OrderBook> OrdersBooks { get; set; }
+
+        [Required]
+        public virtual ICollection<UserBook> UsersBooks { get; set; }
     }
 }

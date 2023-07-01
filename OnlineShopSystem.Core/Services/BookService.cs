@@ -34,6 +34,7 @@ namespace OnlineShopSystem.Core.Services
                     Description = b.Description,
                     ImageUrl = b.ImageUrl,
                     Price = b.Price,
+                    Rating = b.Rating.ToString(),
                     Category = b.Category.Name
                 }).ToListAsync();
         }
@@ -47,6 +48,7 @@ namespace OnlineShopSystem.Core.Services
                 Description = model.Description,
                 ImageUrl = model.ImageUrl,
                 Price = model.Price,
+                Rating = decimal.Parse(model.Rating),
                 CategoryId = model.CategoryId,
             };
 
@@ -82,6 +84,7 @@ namespace OnlineShopSystem.Core.Services
                 book.Description = model.Description;
                 book.ImageUrl = model.ImageUrl;
                 book.Price = model.Price;
+                book.Rating = decimal.Parse(model.Rating);
                 book.CategoryId = model.CategoryId;
 
                 await _data.SaveChangesAsync();
@@ -106,9 +109,31 @@ namespace OnlineShopSystem.Core.Services
                     Description = b.Description,
                     ImageUrl = b.ImageUrl,
                     Price = b.Price,
+                    Rating = b.Rating.ToString(),
                     CategoryId = b.CategoryId,
                     Categories = categories
                 }).FirstOrDefaultAsync();
+        }
+
+        public async Task DeleteBookAsync(int id)
+        {
+            var book = await _data.Books.FirstOrDefaultAsync(b => b.Id == id);
+
+            if (book != null)
+            {
+                _data.Books.Remove(book);
+                await _data.SaveChangesAsync();
+            }
+        }
+
+        public async Task AddBookToFavoritesAsync(string userId, BookViewModel book)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task RemoveBookFromFavoritesAsync(string userId, BookViewModel book)
+        {
+            throw new NotImplementedException();
         }
     }
 }

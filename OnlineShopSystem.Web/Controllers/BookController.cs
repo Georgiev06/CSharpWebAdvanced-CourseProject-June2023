@@ -70,5 +70,11 @@ namespace OnlineShopSystem.Web.Controllers
             return RedirectToAction(nameof(All));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _bookService.DeleteBookAsync(id);
+            return RedirectToAction(nameof(All));
+        }
     }
 }

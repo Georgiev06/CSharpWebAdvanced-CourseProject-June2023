@@ -12,6 +12,11 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
 {
     public class User : IdentityUser
     {
+        public User()
+        {
+            this.UsersBooks = new HashSet<UserBook>();
+        }
+
         [Required]
         [MaxLength(EntityValidationConstants.User.FirstNameMaxLength)]
         public string FirstName { get; set; } = null!;
@@ -27,5 +32,8 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         [Required]
         [MaxLength(EntityValidationConstants.User.AddressMaxLength)]
         public string Address { get; set; } = null!;
+
+        [Required]
+        public virtual ICollection<UserBook> UsersBooks { get; set; }
     }
 }

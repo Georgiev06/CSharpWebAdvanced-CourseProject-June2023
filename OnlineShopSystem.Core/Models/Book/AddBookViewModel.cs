@@ -33,6 +33,9 @@ namespace OnlineShopSystem.Core.Models.Book
         public decimal Price { get; set; }
 
         [Required]
+        public string Rating { get; set; } = null!;
+
+        [Required]
         public int CategoryId { get; set; }
 
         public virtual IEnumerable<CategoryViewModel> Categories { get; set; } = new List<CategoryViewModel>();

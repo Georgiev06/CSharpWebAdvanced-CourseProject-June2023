@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model IEnumerable<OnlineShopSystem.Core.Models.Book.AllBookViewModel>
+@using OnlineShopSystem.Core.Models.Book
+@model IEnumerable<AllBookViewModel>
 
 @{
     ViewBag.Title = "All Books";
@@ -19,15 +20,57 @@
                 <h5 class="card-title mt-1">@book.Title</h5>
                 <p class="mb-0">Author: @book.Author</p>
                 <p class="mb-0">Description: @book.Description</p>
+                <p class="mb-0">Rating: @book.Rating</p>
                 <p class="mb-0">Price: @book.Price$</p>
                 <p>Category: @book.Category</p>
             </div>
 
-            <a href="/Book/Edit/@book.Id" class="btn btn-warning">Edit</a>
+            <form class="input-group-sm" asp-controller="Book" asp-action="AddToFavorites" asp-route-id="@book.Id">
+                <input type="submit" value="Add to Favorites" class="fs-6 btn btn-outline-info mb-3 p-2"/>
+            </form>
 
-            <a href="/Book/Delete/@book.Id" class="btn btn-danger">Delete</a>
+            <div class="d-grid gap-2">
+                <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-warning">Edit</a>
+            </div>
 
+            <form class="mt-2" asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id">
+                <div class="d-grid gap-2">
+                    <input type="submit" value="Delete" class="btn btn-danger mb-2" onclick="myConfirm(event)" />
+                </div>
+            </form>
+
+            <div class="d-grid gap-2">
+                <a asp-controller="Book" asp-action="Order" asp-route-id="@book.Id" class="btn btn-success">Order Book</a>
+            </div>
         </div>
     }
 </div>
+
+@section Scripts {
+    <script>
+       function myConfirm(e) {
+           e.preventDefault();
+           Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+               icon: 'warning',
+               showCancelButton: true,
+               cancelButtonText: 'Cancel',
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: 'Yes, delete it!'
+           }).then((result) => {
+               if (result.isConfirmed) {
+                   Swal.fire(
+                       'Deleted!',
+                        'Your book has been deleted.',
+                        'success'
+                   ).then((resultDeleted) => {
+                       e.target.parentElement.parentElement.submit();
+                   })
+               }
+           })
+       }
+   </script>
+}
 
