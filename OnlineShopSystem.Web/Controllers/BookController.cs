@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShopSystem.Core.Contracts;
 using OnlineShopSystem.Core.Models.Book;
 using OnlineShopSystem.Core.Services;
@@ -47,14 +48,14 @@ namespace OnlineShopSystem.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            EditBookViewModel? book = await _bookService.GetBookByIdForEditAsync(id);
+            EditBookViewModel? model = await _bookService.GetBookByIdForEditAsync(id);
 
-            if (book == null)
+            if (model == null)
             {
                 return RedirectToAction(nameof(All));
             }
 
-            return View(book);
+            return View(model);
         }
 
         [HttpPost]
@@ -76,5 +77,55 @@ namespace OnlineShopSystem.Web.Controllers
             await _bookService.DeleteBookAsync(id);
             return RedirectToAction(nameof(All));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Favorites()
+        {
+            var user = GetUserId();
+
+            var model = await _bookService.GetMyBooksAsync(user);
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddToFavorites(int id)
+        {
+            var book = await _bookService.GetBookByIdAsync(id);
+
+            if (book == null)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            var userId = GetUserId();
+
+            await _bookService.AddBookToFavoritesAsync(userId, book);
+
+            return RedirectToAction(nameof(Favorites));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveFromFavorites(int id)
+        {
+            var book = await _bookService.GetBookByIdAsync(id);
+
+            if (book == null)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            var userId = GetUserId();
+            await _bookService.RemoveBookFromFavoritesAsync(userId, book);
+
+            return RedirectToAction(nameof(Favorites));
+        }
+
+        public async Task<IActionResult> Order()
+        {
+            return View();
+        }
+
+        private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }

@@ -115,6 +115,22 @@ namespace OnlineShopSystem.Core.Services
                 }).FirstOrDefaultAsync();
         }
 
+        public async Task<BookViewModel?> GetBookByIdAsync(int id)
+        {
+            return await _data.Books
+                .Where(b => b.Id == id)
+                .Select(b => new BookViewModel()
+                {
+                    Id = b.Id,
+                    Title = b.Title,
+                    Author = b.Author,
+                    ImageUrl = b.ImageUrl,
+                    Description = b.Description,
+                    Rating = b.Rating.ToString(),
+                    CategoryId = b.CategoryId
+                }).FirstOrDefaultAsync();
+        }
+
         public async Task DeleteBookAsync(int id)
         {
             var book = await _data.Books.FirstOrDefaultAsync(b => b.Id == id);
@@ -126,14 +142,50 @@ namespace OnlineShopSystem.Core.Services
             }
         }
 
+        public async Task<IEnumerable<AllBookViewModel>> GetMyBooksAsync(string userId)
+        {
+            return await _data.UsersBooks
+                .Where(ub => ub.UserId == userId)
+                .Select(b => new AllBookViewModel
+                {
+                    Id = b.Book.Id,
+                    Title = b.Book.Title,
+                    Author = b.Book.Author,
+                    Description = b.Book.Description,
+                    ImageUrl = b.Book.ImageUrl,
+                    Rating = b.Book.Rating.ToString(),
+                    Price = b.Book.Price,
+                    Category = b.Book.Category.Name
+                }).ToListAsync();
+        }
+
         public async Task AddBookToFavoritesAsync(string userId, BookViewModel book)
         {
-            throw new NotImplementedException();
+            bool IsAdded = await _data.UsersBooks.AnyAsync(ub => ub.UserId == userId && ub.BookId == book.Id);
+
+            if (IsAdded == false)
+            {
+                var userBook = new UserBook
+                {
+                    UserId = userId,
+                    BookId = book.Id,
+                };
+
+                await _data.UsersBooks.AddAsync(userBook);
+                await _data.SaveChangesAsync();
+            }
         }
 
         public async Task RemoveBookFromFavoritesAsync(string userId, BookViewModel book)
         {
-            throw new NotImplementedException();
+            var userBook = await _data.UsersBooks
+                .FirstOrDefaultAsync(ub => ub.UserId == userId && ub.BookId == book.Id);
+
+            if (userBook != null)
+            {
+                _data.UsersBooks.Remove(userBook);
+                await _data.SaveChangesAsync();
+            }
         }
     }
 }
