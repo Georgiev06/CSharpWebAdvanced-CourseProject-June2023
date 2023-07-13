@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace OnlineShopSystem.Web.Controllers
 {
-    public class BookController : Controller
+    public class BookController : BaseController
     {
         private readonly IBookService _bookService;
 
@@ -71,12 +71,21 @@ namespace OnlineShopSystem.Web.Controllers
             return RedirectToAction(nameof(All));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var bookModel = await _bookService.BookDetailsByIdAsync(id);
+
+            return View(bookModel);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
             await _bookService.DeleteBookAsync(id);
             return RedirectToAction(nameof(All));
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Favorites()

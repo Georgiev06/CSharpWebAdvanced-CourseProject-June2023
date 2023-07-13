@@ -142,6 +142,23 @@ namespace OnlineShopSystem.Core.Services
             }
         }
 
+        public async Task<DetailsBookViewModel> BookDetailsByIdAsync(int id)
+        {
+            return await _data.Books
+                .Where(b => b.Id == id)
+                .Select(b => new DetailsBookViewModel()
+                {
+                    Id = b.Id,
+                    Title = b.Title,
+                    Author = b.Author,
+                    Price = b.Price,
+                    ImageUrl = b.ImageUrl,
+                    Description = b.Description,
+                    Rating = b.Rating.ToString(),
+                    Category = b.Category.Name
+                }).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<AllBookViewModel>> GetMyBooksAsync(string userId)
         {
             return await _data.UsersBooks

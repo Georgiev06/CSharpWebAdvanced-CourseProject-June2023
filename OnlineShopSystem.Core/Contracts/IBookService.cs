@@ -17,6 +17,7 @@ namespace OnlineShopSystem.Core.Contracts
         Task<BookViewModel?> GetBookByIdAsync(int id);
         Task<IEnumerable<AllBookViewModel>> GetMyBooksAsync(string userId);
         Task DeleteBookAsync(int id);
+        Task<DetailsBookViewModel> BookDetailsByIdAsync(int id);
         Task AddBookToFavoritesAsync(string userId, BookViewModel book);
         Task RemoveBookFromFavoritesAsync(string userId, BookViewModel book);
     }

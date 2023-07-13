@@ -18,15 +18,25 @@
             <div class="card-body">
 
                 <h5 class="card-title mt-1">@book.Title</h5>
-                <p class="mb-0">Author: @book.Author</p>
-                <p class="mb-0">Description: @book.Description</p>
-                <p class="mb-0">Rating: @book.Rating</p>
-                <p class="mb-0">Price: $@book.Price</p>
-                <p>Category: @book.Category</p>
+                <p class="mb-0"><b>Author:</b> @book.Author</p>
+                @*<p class="mb-0">Description: @book.Description</p>*@
+                <p class="mb-0"><b>Rating:</b> @book.Rating</p>
+                <p class="mb-0"><b>Price:</b> $@book.Price</p>
+                <p><b>Category:</b> @book.Category</p>
             </div>
 
             <form class="input-group-sm" asp-controller="Book" asp-action="AddToFavorites" asp-route-id="@book.Id">
                 <input type="submit" value="Add to Favorites" class="fs-6 btn btn-outline-info mb-3 p-2"/>
+            </form>
+
+            <div class="d-grid gap-2">
+                <a asp-controller="Book" asp-action="Details" asp-route-id="@book.Id" class="btn btn-warning">Details</a>
+            </div>
+
+            <form class="mt-2">
+                <div class="d-grid gap-2">
+
+                </div>
             </form>
 
             <div class="d-grid gap-2">
@@ -42,6 +52,7 @@
             <div class="d-grid gap-2">
                 <a asp-controller="Book" asp-action="Order" asp-route-id="@book.Id" class="btn btn-success">Order Book</a>
             </div>
+
         </div>
     }
 </div>
