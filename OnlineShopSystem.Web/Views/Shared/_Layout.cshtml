@@ -7,12 +7,17 @@
     <link rel="stylesheet" href="~/lib/limonte-sweetalert2/sweetalert2.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/shoppingCart.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/OnlineShopSystem.Web.styles.css" asp-append-version="true" />
+
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="https://cdn.jsdelivr.net/npm/twemoji@11.3.0/2/svg/1f4d6.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+                </a>
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Book Shop</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -32,8 +37,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Favorites">Favorites</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav flex-grow-2">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Order">Order</a>
+                            <a class="nav-link text-dark shopping-cart-icon" asp-area="" asp-controller="Book" asp-action="Order"></a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

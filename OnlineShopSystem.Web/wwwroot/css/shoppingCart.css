@@ -1,0 +1,11 @@
+﻿.shopping-cart-icon {
+    display: inline-block;
+    background-image: url('https://cdn.jsdelivr.net/npm/twemoji@11.3.0/2/svg/1f6d2.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 28px;
+    height: 28px;
+    padding-left: 30px;
+    line-height: 30px;
+    margin-right: 15px;
+}

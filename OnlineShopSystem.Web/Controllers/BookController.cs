@@ -97,7 +97,7 @@ namespace OnlineShopSystem.Web.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> AddToFavorites(int id)
         {
             var book = await _bookService.GetBookByIdAsync(id);
