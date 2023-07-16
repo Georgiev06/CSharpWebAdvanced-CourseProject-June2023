@@ -130,11 +130,6 @@ namespace OnlineShopSystem.Web.Controllers
             return RedirectToAction(nameof(Favorites));
         }
 
-        public async Task<IActionResult> Order()
-        {
-            return View();
-        }
-
         private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }

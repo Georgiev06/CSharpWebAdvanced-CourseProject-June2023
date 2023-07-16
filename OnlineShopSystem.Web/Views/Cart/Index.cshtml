@@ -1,0 +1,44 @@
+﻿@using OnlineShopSystem.Infrastructure.Data.Models;
+@model List<ShoppingCart>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+                <td>
+                    @Html.ActionLink("Remove", "RemoveFromCart", new { itemId = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Add Item</h3>
+@using (Html.BeginForm("AddToCart", "Cart"))
+{
+    <div>
+        <label>Name:</label>
+        @Html.TextBoxFor(model => model.Name)
+    </div>
+    <div>
+        <label>Price:</label>
+        @Html.TextBoxFor(model => model.Price)
+    </div>
+    <div>
+        <label>Quantity:</label>
+        @Html.TextBoxFor(model => model.Quantity)
+    </div>
+    <button type="submit">Add to Cart</button>
+}

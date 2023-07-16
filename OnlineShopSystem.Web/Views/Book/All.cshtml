@@ -19,7 +19,6 @@
 
                 <h5 class="card-title mt-1">@book.Title</h5>
                 <p class="mb-0"><b>Author:</b> @book.Author</p>
-                @*<p class="mb-0">Description: @book.Description</p>*@
                 <p class="mb-0"><b>Rating:</b> @book.Rating</p>
                 <p class="mb-0"><b>Price:</b> $@book.Price</p>
                 <p><b>Category:</b> @book.Category</p>
@@ -50,7 +49,7 @@
             </form>
 
             <div class="d-grid gap-2">
-                <a asp-controller="Book" asp-action="Order" asp-route-id="@book.Id" class="btn btn-success">Order Book</a>
+                <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@book.Id" class="btn btn-success">Add to Cart</a>
             </div>
         </div>
     }

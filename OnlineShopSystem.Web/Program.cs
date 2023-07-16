@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineShopSystem.Core.Contracts;
 using OnlineShopSystem.Core.Services;
@@ -22,8 +23,15 @@ builder.Services.AddDefaultIdentity<User>(options =>
 
 }).AddEntityFrameworkStores<BookShopDbContext>();
 
-builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IBookService, BookService>();
+
+builder.Services
+    .AddControllersWithViews()
+    .AddMvcOptions(options =>
+{
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+});
+
 
 var app = builder.Build();
 

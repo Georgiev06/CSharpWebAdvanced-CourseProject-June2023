@@ -25,6 +25,8 @@ namespace OnlineShopSystem.Web.Data
 
         public DbSet<UserBook> UsersBooks { get; set; } = null!;
 
+        public DbSet<ShoppingCart> ShoppingCart { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Category>()

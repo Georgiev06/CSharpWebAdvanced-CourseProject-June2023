@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -35,5 +36,11 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
 
         [Required]
         public virtual ICollection<UserBook> UsersBooks { get; set; }
+
+        [Required]
+        public int ShoppingCartId { get; set; }
+
+        [ForeignKey(nameof(ShoppingCartId))]
+        public virtual ShoppingCart ShoppingCart { get; set; }
     }
 }
