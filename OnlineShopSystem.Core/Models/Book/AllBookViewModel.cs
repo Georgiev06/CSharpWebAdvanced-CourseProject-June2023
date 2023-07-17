@@ -27,10 +27,5 @@ namespace OnlineShopSystem.Core.Models.Book
         public string Rating { get; set; } = null!;
 
         public string Category { get; set; } = null!;
-
-        //public virtual ICollection<Review> Reviews { get; set; }
-
-        //[Required]
-        //public virtual ICollection<OrderBook> OrdersBooks { get; set; }
     }
 }

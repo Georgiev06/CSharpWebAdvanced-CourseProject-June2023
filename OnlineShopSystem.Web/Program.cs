@@ -24,6 +24,7 @@ builder.Services.AddDefaultIdentity<User>(options =>
 }).AddEntityFrameworkStores<BookShopDbContext>();
 
 builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 
 builder.Services
     .AddControllersWithViews()

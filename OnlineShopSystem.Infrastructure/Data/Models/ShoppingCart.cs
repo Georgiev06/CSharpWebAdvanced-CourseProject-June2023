@@ -18,7 +18,7 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         public int Id { get; set; }
 
         [Required]
-        public int Count { get; set; }
+        public int Quantity { get; set; }
 
         [Required]
         public decimal Price { get; set; }

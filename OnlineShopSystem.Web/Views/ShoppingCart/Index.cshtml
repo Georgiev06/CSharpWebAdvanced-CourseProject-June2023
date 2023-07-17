@@ -1,0 +1,46 @@
+﻿@model OnlineShopSystem.Core.Models.Cart.ShoppingCartViewModel
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Shopping Cart</h1>
+            @if (!Model.Items.Any())
+            {
+                <p>Your shopping cart is empty.</p>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Price</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var book in Model.Items)
+                        {
+                            <tr>
+                                <td>@book.BookTitle</td>
+                                <td>@book.BookPrice</td>
+                                <td>
+                                    <form action="@Url.Action("RemoveFromCart", "ShoppingCart")" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@book.BookId" />
+                                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
