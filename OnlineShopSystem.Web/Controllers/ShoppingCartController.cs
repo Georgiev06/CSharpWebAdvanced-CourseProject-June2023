@@ -15,12 +15,18 @@ namespace OnlineShopSystem.Web.Controllers
             this._cartService = cartService;
         }
 
-        public IActionResult Index()
+        private string GetUserId()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            var userId = claim.Value;
+            return claim.Value;
+        }
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var userId = GetUserId();
 
             var cart = _cartService.GetCartByUserId(userId);
 
@@ -29,14 +35,13 @@ namespace OnlineShopSystem.Web.Controllers
                 UserId = userId,
                 Items = cart?.Books.Select(book => new ShoppingCartItemViewModel
                 {
-                    BookId = book.Id,
-                    BookTitle = book.Title,
-                    BookAuthor = book.Author,
-                    BookPrice = book.Price,
-                    BookImageUrl = book.ImageUrl,
-                    BookDescription = book.Description,
-                    BookRating = book.Rating.ToString(),
-                    //Quantity = book.Count
+                    Id = book.Id,
+                    Title = book.Title,
+                    Author = book.Author,
+                    Price = book.Price,
+                    ImageUrl = book.ImageUrl,
+                    Description = book.Description,
+                    Rating = book.Rating.ToString(),
                 }).ToList() ?? new List<ShoppingCartItemViewModel>()
             };
 
@@ -44,24 +49,30 @@ namespace OnlineShopSystem.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToCart(string userId, int bookId, int quantity)
+        public async Task<IActionResult> AddToCart(int bookId)
         {
-            await _cartService.AddBookToCartAsync(userId, bookId, quantity);
-            return RedirectToAction(nameof(Index), new { userId });
+            var userId = GetUserId();
+
+            await _cartService.AddBookToCartAsync(userId, bookId);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveFromCart(string userId, int bookId)
+        public async Task<IActionResult> RemoveFromCart(int bookId)
         {
+            var userId = GetUserId();
+
             await _cartService.RemoveBookFromCartAsync(userId, bookId);
-            return RedirectToAction(nameof(Index), new { userId });
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public async Task<IActionResult> ClearCart(string userId)
+        public async Task<IActionResult> ClearCart()
         {
+            var userId = GetUserId();
+
             await _cartService.ClearCartAsync(userId);
-            return RedirectToAction(nameof(Index), new { userId });
+            return RedirectToAction(nameof(Index));
         }
     }
 }

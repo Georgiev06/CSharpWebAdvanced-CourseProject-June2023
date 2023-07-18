@@ -27,10 +27,6 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         public string LastName { get; set; } = null!;
 
         [Required]
-        [MaxLength(EntityValidationConstants.User.PasswordMaxLength)]
-        public string Password { get; set; } = null!;
-
-        [Required]
         [MaxLength(EntityValidationConstants.User.AddressMaxLength)]
         public string Address { get; set; } = null!;
 

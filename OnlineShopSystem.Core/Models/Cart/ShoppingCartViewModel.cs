@@ -13,5 +13,6 @@ namespace OnlineShopSystem.Core.Models.Cart
     {
         public string UserId { get; set; } = null!;
         public List<ShoppingCartItemViewModel> Items { get; set; } = null!;
+        public decimal TotalPrice => this.Items.Sum(i => i.Price);
     }
 }

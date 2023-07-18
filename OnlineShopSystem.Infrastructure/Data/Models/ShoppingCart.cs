@@ -21,7 +21,7 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         public int Quantity { get; set; }
 
         [Required]
-        public decimal Price { get; set; }
+        public decimal TotalPrice { get; set; }
 
         [Required]
         public string UserId { get; set; } = null!;

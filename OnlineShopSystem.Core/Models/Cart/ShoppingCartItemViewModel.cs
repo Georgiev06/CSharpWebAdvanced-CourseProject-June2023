@@ -8,12 +8,12 @@ namespace OnlineShopSystem.Core.Models.Cart
 {
     public class ShoppingCartItemViewModel
     {
-        public int BookId { get; set; }
-        public string BookTitle { get; set; } = null!;
-        public string BookAuthor { get; set; } = null!;
-        public string BookImageUrl { get; set; } = null!;
-        public decimal BookPrice { get; set; }
-        public string BookDescription { get; set; } = null!;
-        public string BookRating { get; set; } = null!;
+        public int Id { get; set; }
+        public string Title { get; set; } = null!;
+        public string Author { get; set; } = null!;
+        public string ImageUrl { get; set; } = null!;
+        public decimal Price { get; set; }
+        public string Description { get; set; } = null!;
+        public string Rating { get; set; } = null!;
     }
 }

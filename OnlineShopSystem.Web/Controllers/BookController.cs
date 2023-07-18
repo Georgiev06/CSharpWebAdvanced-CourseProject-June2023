@@ -114,7 +114,7 @@ namespace OnlineShopSystem.Web.Controllers
             return RedirectToAction(nameof(Favorites));
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> RemoveFromFavorites(int id)
         {
             var book = await _bookService.GetBookByIdAsync(id);

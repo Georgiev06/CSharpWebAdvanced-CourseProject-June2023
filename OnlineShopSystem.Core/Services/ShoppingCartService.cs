@@ -21,7 +21,7 @@ namespace OnlineShopSystem.Core.Services
             _data = dbContext;
         }
 
-        public async Task AddBookToCartAsync(string userId, int bookId, int quantity)
+        public async Task AddBookToCartAsync(string userId, int bookId)
         {
             var cart = GetCartByUserId(userId);
 
@@ -39,33 +39,16 @@ namespace OnlineShopSystem.Core.Services
             var book = await _data.Books.FindAsync(bookId);
 
             if (book == null)
-            {
-                // Handle book not found error
+            {   
                 //return;
             }
 
-            if (cart.Books.Any(b => b.Id == bookId))
+            if (!cart.Books.Any(b => b.Id == bookId))
             {
-                // Increase the quantity if the book is already in the cart
-                var cartItem = cart.Books.First(b => b.Id == bookId);
-
-            }
-            else
-            {
-                // Add the book to the cart with the specified quantity
-                if (book != null)
-                {
-                    cart.Books.Add(new Book
-                    {
-                        Id = book.Id,
-                        Title = book.Title,
-                        Author = book.Author,
-                        Price = book.Price,
-                    });
-                }
+                cart.Books.Add(book);
             }
 
-             await _data.SaveChangesAsync();
+            await _data.SaveChangesAsync();
         }
 
         public async Task RemoveBookFromCartAsync(string userId, int bookId)
@@ -74,7 +57,6 @@ namespace OnlineShopSystem.Core.Services
 
             if (cart == null)
             {
-                // Handle cart not found error
                 //return;
             }
 
@@ -93,7 +75,6 @@ namespace OnlineShopSystem.Core.Services
 
             //if (cart == null)
             //{
-            //    // Handle cart not found error
             //    //return;
             //}
 
@@ -101,7 +82,7 @@ namespace OnlineShopSystem.Core.Services
 
             //if (book != null)
             //{
-            //    book.Quantity = quantity; ->> you should update your book entity to have quantity property in order UpdateQuantityAsync to work
+            //    book.Quantity = quantity;
             //    await _data.SaveChangesAsync();
             //}
         }
