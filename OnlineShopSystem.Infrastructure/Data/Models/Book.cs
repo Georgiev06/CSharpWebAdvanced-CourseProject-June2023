@@ -17,7 +17,7 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
             this.Reviews = new HashSet<Review>();
             this.OrdersBooks = new HashSet<OrderBook>();
             this.UsersBooks = new HashSet<UserBook>();
-            this.ShoppingCart = new HashSet<ShoppingCart>();
+            this.ShoppingCarts = new HashSet<ShoppingCart>();
         }
 
         [Key]
@@ -61,7 +61,6 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         [Required]
         public virtual ICollection<UserBook> UsersBooks { get; set; }
 
-        [Required]
-        public virtual ICollection<ShoppingCart> ShoppingCart { get; set; }
+        public virtual ICollection<ShoppingCart>? ShoppingCarts { get; set; }
     }
 }

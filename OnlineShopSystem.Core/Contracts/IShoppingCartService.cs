@@ -11,8 +11,6 @@ namespace OnlineShopSystem.Core.Contracts
     public interface IShoppingCartService
     {
         Task AddBookToCartAsync(string userId, int bookId);
-
-        //Task UpdateQuantityAsync(int productId, string userId, int quantity);
         Task RemoveBookFromCartAsync(string userId, int bookId);
         Task ClearCartAsync(string userId);
         ShoppingCart GetCartByUserId(string userId);

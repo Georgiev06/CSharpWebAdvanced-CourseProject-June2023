@@ -51,7 +51,6 @@ namespace OnlineShopSystem.Web.Data
                 Name = "Thriller"
             });
 
-
             builder.Entity<OrderBook>()
                 .HasKey(x => new { x.BookId, x.OrderId });
 
@@ -62,6 +61,15 @@ namespace OnlineShopSystem.Web.Data
                 .HasOne(x => x.Book)
                 .WithMany(x => x.OrdersBooks)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<User>()
+                .HasOne(u => u.ShoppingCart)
+                .WithOne(sc => sc.User)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ShoppingCart>()
+                .Property(p => p.TotalPrice)
+                .HasPrecision(18, 2);
 
             builder.Entity<Order>()
                 .Property(p => p.TotalAmount)

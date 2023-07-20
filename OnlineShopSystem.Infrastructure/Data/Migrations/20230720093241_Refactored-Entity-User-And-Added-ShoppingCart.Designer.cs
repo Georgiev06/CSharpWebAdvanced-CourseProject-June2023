@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShopSystem.Web.Data;
 
@@ -11,9 +12,10 @@ using OnlineShopSystem.Web.Data;
 namespace OnlineShopSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(BookShopDbContext))]
-    partial class BookShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230720093241_Refactored-Entity-User-And-Added-ShoppingCart")]
+    partial class RefactoredEntityUserAndAddedShoppingCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace OnlineShopSystem.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("BookShoppingCart", b =>
+                {
+                    b.Property<int>("BooksId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShoppingCartsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BooksId", "ShoppingCartsId");
+
+                    b.HasIndex("ShoppingCartsId");
+
+                    b.ToTable("BookShoppingCart");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -322,6 +339,33 @@ namespace OnlineShopSystem.Infrastructure.Migrations
                     b.ToTable("Reviews");
                 });
 
+            modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.ShoppingCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("ShoppingCart");
+                });
+
             modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -370,11 +414,6 @@ namespace OnlineShopSystem.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(127)
-                        .HasColumnType("nvarchar(127)");
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -386,6 +425,9 @@ namespace OnlineShopSystem.Infrastructure.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ShoppingCartId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -420,6 +462,21 @@ namespace OnlineShopSystem.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UsersBooks");
+                });
+
+            modelBuilder.Entity("BookShoppingCart", b =>
+                {
+                    b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.Book", null)
+                        .WithMany()
+                        .HasForeignKey("BooksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.ShoppingCart", null)
+                        .WithMany()
+                        .HasForeignKey("ShoppingCartsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -541,6 +598,17 @@ namespace OnlineShopSystem.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.User", "User")
+                        .WithOne("ShoppingCart")
+                        .HasForeignKey("OnlineShopSystem.Infrastructure.Data.Models.ShoppingCart", "UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.UserBook", b =>
                 {
                     b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.Book", "Book")
@@ -576,6 +644,8 @@ namespace OnlineShopSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.User", b =>
                 {
+                    b.Navigation("ShoppingCart");
+
                     b.Navigation("UsersBooks");
                 });
 #pragma warning restore 612, 618

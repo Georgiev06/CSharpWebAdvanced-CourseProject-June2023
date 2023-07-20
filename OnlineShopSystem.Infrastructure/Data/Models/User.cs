@@ -30,13 +30,10 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         [MaxLength(EntityValidationConstants.User.AddressMaxLength)]
         public string Address { get; set; } = null!;
 
-        [Required]
-        public virtual ICollection<UserBook> UsersBooks { get; set; }
+        public virtual ICollection<UserBook>? UsersBooks { get; set; }
 
-        [Required]
-        public int ShoppingCartId { get; set; }
+        public int? ShoppingCartId { get; set; }
 
-        [ForeignKey(nameof(ShoppingCartId))]
-        public virtual ShoppingCart ShoppingCart { get; set; }
+        public virtual ShoppingCart? ShoppingCart { get; set; }
     }
 }

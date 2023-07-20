@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OnlineShopSystem.Core.Models.Book;
+using static OnlineShopSystem.Infrastructure.Common.EntityValidationConstants;
+using Book = OnlineShopSystem.Infrastructure.Data.Models.Book;
 
 namespace OnlineShopSystem.Core.Services
 {
@@ -67,24 +69,6 @@ namespace OnlineShopSystem.Core.Services
                  cart.Books.Remove(book);
                  await _data.SaveChangesAsync();
             }
-        }
-
-        public async Task UpdateQuantityAsync(int productId, string userId, int quantity)
-        {
-            //var cart = GetCartByUserId(userId);
-
-            //if (cart == null)
-            //{
-            //    //return;
-            //}
-
-            //var book = cart.Books.FirstOrDefault(b => b.Id == productId);
-
-            //if (book != null)
-            //{
-            //    book.Quantity = quantity;
-            //    await _data.SaveChangesAsync();
-            //}
         }
 
         public async Task ClearCartAsync(string userId)
