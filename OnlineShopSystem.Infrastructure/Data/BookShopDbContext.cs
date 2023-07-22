@@ -27,6 +27,9 @@ namespace OnlineShopSystem.Web.Data
 
         public DbSet<ShoppingCart> ShoppingCart { get; set; } = null!;
 
+        public DbSet<UserOrder> UsersOrders { get; set; } = null!;
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Category>()
@@ -56,6 +59,9 @@ namespace OnlineShopSystem.Web.Data
 
             builder.Entity<UserBook>()
                 .HasKey(x => new { x.BookId, x.UserId });
+
+            builder.Entity<UserOrder>()
+                .HasKey(x => new { x.UserId, x.OrderId });
 
             builder.Entity<OrderBook>()
                 .HasOne(x => x.Book)

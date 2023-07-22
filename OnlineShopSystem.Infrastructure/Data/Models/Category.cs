@@ -22,7 +22,6 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         [MaxLength(EntityValidationConstants.Category.NameMaxLength)]
         public string Name { get; set; } = null!;
 
-        [Required] 
         public virtual ICollection<Book> Books { get; set; }
     }
 }

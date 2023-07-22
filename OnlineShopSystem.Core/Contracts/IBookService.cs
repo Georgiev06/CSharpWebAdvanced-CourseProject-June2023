@@ -9,8 +9,8 @@ namespace OnlineShopSystem.Core.Contracts
 {
     public interface IBookService
     {
-        Task<IEnumerable<AllBookViewModel>> GetAllBooksAsync();
-        Task AddBookAsync(AddBookViewModel model);
+        Task<IEnumerable<AllBookViewModel>> GetAllBooksAsync(string userId);
+        Task AddBookAsync(string userId, AddBookViewModel model);
         Task<AddBookViewModel> GetAddBookModelAsync();
         Task EditBookAsync(EditBookViewModel model, int id);
         Task<EditBookViewModel?> GetBookByIdForEditAsync(int id);

@@ -10,22 +10,20 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
 {
     public class Order
     {
+        public Order()
+        {
+            this.UsersOrder = new HashSet<UserOrder>();
+            this.OrdersBooks = new HashSet<OrderBook>();
+        }
+
         [Key]
         public int Id { get; set; }
 
         [Required]
         public decimal TotalAmount { get; set; }
 
-        [Required]
-        public string UserId { get; set; } = null!;
+        public virtual ICollection<OrderBook> OrdersBooks { get; set; }
 
-        [ForeignKey(nameof(UserId))]
-        public virtual User User { get; set; } = null!;
-
-        [Required]
-        public int BookId { get; set; }
-
-        [ForeignKey(nameof(BookId))]
-        public virtual Book Book { get; set; } = null!;
+        public virtual ICollection<UserOrder> UsersOrder { get; set; } = null!;
     }
 }

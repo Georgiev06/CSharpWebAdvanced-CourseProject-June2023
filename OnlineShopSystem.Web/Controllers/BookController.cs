@@ -19,7 +19,9 @@ namespace OnlineShopSystem.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> All()
         {
-            var model = await _bookService.GetAllBooksAsync();
+            var userId = GetUserId();
+
+            var model = await _bookService.GetAllBooksAsync(userId);
 
             return View(model);
         }
@@ -35,12 +37,14 @@ namespace OnlineShopSystem.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddBookViewModel model)
         {
+            var userId = GetUserId();
+
             if (ModelState.IsValid == false)
             {
                 return View(model);
             }
 
-            await _bookService.AddBookAsync(model);
+            await _bookService.AddBookAsync(userId, model);
 
             return RedirectToAction(nameof(All));
         }

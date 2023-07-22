@@ -16,6 +16,7 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         public User()
         {
             this.UsersBooks = new HashSet<UserBook>();
+            this.UserOrders = new HashSet<UserOrder>();
         }
 
         [Required]
@@ -30,10 +31,12 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         [MaxLength(EntityValidationConstants.User.AddressMaxLength)]
         public string Address { get; set; } = null!;
 
-        public virtual ICollection<UserBook>? UsersBooks { get; set; }
-
         public int? ShoppingCartId { get; set; }
 
         public virtual ShoppingCart? ShoppingCart { get; set; }
+
+        public virtual ICollection<UserBook>? UsersBooks { get; set; }
+
+        public virtual ICollection<UserOrder> UserOrders { get; set; } = null!;
     }
 }

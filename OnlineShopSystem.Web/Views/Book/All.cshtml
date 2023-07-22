@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using OnlineShopSystem.Core.Models.Book
 @model IEnumerable<AllBookViewModel>
+@using OnlineShopSystem.Core.Models.Book
+@using System.Security.Claims
 
 @{
     ViewBag.Title = "All Books";
@@ -24,9 +26,12 @@
                 <p><b>Category:</b> @book.Category</p>
             </div>
 
-            <form class="input-group-sm" asp-controller="Book" asp-action="AddToFavorites" asp-route-id="@book.Id">
-                <input type="submit" value="Add to Favorites" class="fs-6 btn btn-outline-info mb-3 p-2"/>
-            </form>
+            @if (User.FindFirstValue(ClaimTypes.NameIdentifier) != @book.UserId)
+            {
+                <form class="input-group-sm" asp-controller="Book" asp-action="AddToFavorites" asp-route-id="@book.Id">
+                    <input type="submit" value="Add to Favorites" class="fs-6 btn btn-outline-info mb-3 p-2"/>
+                </form>
+            }
 
             <div class="d-grid gap-2">
                 <a asp-controller="Book" asp-action="Details" asp-route-id="@book.Id" class="btn btn-warning">Details</a>
@@ -38,15 +43,18 @@
                 </div>
             </form>
 
-            <div class="d-grid gap-2">
-                <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-warning">Edit</a>
-            </div>
-
-            <form class="mt-2" asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id">
+            @if (User.FindFirstValue(ClaimTypes.NameIdentifier) == @book.UserId)
+            {
                 <div class="d-grid gap-2">
-                    <input type="submit" value="Delete" class="btn btn-danger mb-2" onclick="myConfirm(event)" />
+                    <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-warning">Edit</a>
                 </div>
-            </form>
+
+                <form class="mt-2" asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id">
+                    <div class="d-grid gap-2">
+                        <input type="submit" value="Delete" class="btn btn-danger mb-2" onclick="myConfirm(event)" />
+                    </div>
+                </form>
+            }
 
             <div class="d-grid gap-2">
                 <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@book.Id" class="btn btn-success">Add to Cart</a>

@@ -22,7 +22,7 @@ namespace OnlineShopSystem.Core.Services
             this._data = dbContext;
         }
 
-        public async Task<IEnumerable<AllBookViewModel>> GetAllBooksAsync()
+        public async Task<IEnumerable<AllBookViewModel>> GetAllBooksAsync(string userId)
         {
             return await _data
                 .Books
@@ -35,11 +35,12 @@ namespace OnlineShopSystem.Core.Services
                     ImageUrl = b.ImageUrl,
                     Price = b.Price,
                     Rating = b.Rating.ToString(),
-                    Category = b.Category.Name
+                    Category = b.Category.Name,
+                    UserId = userId
                 }).ToListAsync();
         }
 
-        public async Task AddBookAsync(AddBookViewModel model)
+        public async Task AddBookAsync(string userId, AddBookViewModel model)
         {
             Book book = new Book()
             {
@@ -54,6 +55,9 @@ namespace OnlineShopSystem.Core.Services
 
             await _data.Books.AddAsync(book);
             await _data.SaveChangesAsync();
+
+            var bookById = await GetBookByIdAsync(book.Id);
+            await AddBookToFavoritesAsync(userId, bookById);
         }
 
         public async Task<AddBookViewModel> GetAddBookModelAsync()

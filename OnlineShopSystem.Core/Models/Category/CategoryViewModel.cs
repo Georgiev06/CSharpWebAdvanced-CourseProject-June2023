@@ -12,6 +12,8 @@ namespace OnlineShopSystem.Core.Models.Category
     {
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(EntityValidationConstants.Category.NameMaxLength, MinimumLength = EntityValidationConstants.Category.NameMinLength)]
         public string Name { get; set; } = null!;
     }
 }

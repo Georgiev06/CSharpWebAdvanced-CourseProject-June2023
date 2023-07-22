@@ -32,6 +32,7 @@ namespace OnlineShopSystem.Core.Models.Book
         public decimal Price { get; set; }
 
         [Required]
+        [MaxLength(EntityValidationConstants.Book.RatingMaxLength)]
         public string Rating { get; set; } = null!;
 
         [Required]

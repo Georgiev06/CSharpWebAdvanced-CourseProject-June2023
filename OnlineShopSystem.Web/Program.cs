@@ -25,6 +25,7 @@ builder.Services.AddDefaultIdentity<User>(options =>
 
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services
     .AddControllersWithViews()

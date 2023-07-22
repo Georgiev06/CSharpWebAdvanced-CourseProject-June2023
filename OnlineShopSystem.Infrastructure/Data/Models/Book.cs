@@ -17,7 +17,6 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
             this.Reviews = new HashSet<Review>();
             this.OrdersBooks = new HashSet<OrderBook>();
             this.UsersBooks = new HashSet<UserBook>();
-            this.ShoppingCarts = new HashSet<ShoppingCart>();
         }
 
         [Key]
@@ -52,15 +51,10 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         [ForeignKey(nameof(CategoryId))]
         public virtual Category Category { get; set; } = null!;
 
-        [Required] 
         public virtual ICollection<Review> Reviews { get; set; }
 
-        [Required]
         public virtual ICollection<OrderBook> OrdersBooks { get; set; }
 
-        [Required]
         public virtual ICollection<UserBook> UsersBooks { get; set; }
-
-        public virtual ICollection<ShoppingCart>? ShoppingCarts { get; set; }
     }
 }
