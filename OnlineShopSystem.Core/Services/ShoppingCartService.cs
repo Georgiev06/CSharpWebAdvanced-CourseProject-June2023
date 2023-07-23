@@ -20,7 +20,7 @@ namespace OnlineShopSystem.Core.Services
 
         public ShoppingCartService(BookShopDbContext dbContext)
         {
-            _data = dbContext;
+            this._data = dbContext;
         }
 
         public async Task AddBookToCartAsync(string userId, int bookId)
@@ -29,23 +29,30 @@ namespace OnlineShopSystem.Core.Services
 
             if (cart == null)
             {
-                cart = new ShoppingCart()
+                cart = new ShoppingCart
                 {
                     UserId = userId,
                     Books = new List<Book>()
                 };
 
                 await _data.ShoppingCart.AddAsync(cart);
-                await _data.SaveChangesAsync();
             }
 
-            var book = await _data.Books.FirstOrDefaultAsync(b => b.Id == bookId);
+            var book = await _data.Books.FindAsync(bookId);
 
-            if (book != null)
+            if (book == null)
             {
-                cart.Books.Add(book);
-                await _data.SaveChangesAsync();
+                // Handle book not found error
+                // return;
             }
+
+            if (!cart.Books.Any(b => b.Id == bookId))
+            {
+                // Add the book to the cart if it is not already present
+                cart.Books.Add(book);
+            }
+
+            await _data.SaveChangesAsync();
         }
 
         public async Task RemoveBookFromCartAsync(string userId, int bookId)
@@ -54,7 +61,7 @@ namespace OnlineShopSystem.Core.Services
 
             if (cart == null)
             {
-                //return;
+                return;
             }
 
             var book = cart.Books.FirstOrDefault(b => b.Id == bookId);
@@ -80,6 +87,7 @@ namespace OnlineShopSystem.Core.Services
         public ShoppingCart GetCartByUserId(string userId)
         {
             return _data.ShoppingCart
+                .Include(b => b.Books)
                 .FirstOrDefault(c => c.UserId == userId);
         }
     }
