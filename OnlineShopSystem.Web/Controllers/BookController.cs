@@ -10,20 +10,26 @@ namespace OnlineShopSystem.Web.Controllers
     public class BookController : BaseController
     {
         private readonly IBookService _bookService;
+        private readonly ICategoryService _categoryService;
 
-        public BookController(IBookService bookService)
+        public BookController(IBookService bookService, ICategoryService categoryService)
         {
             this._bookService = bookService;
+            this._categoryService = categoryService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]AllBooksQueryModel queryModel)
         {
             var userId = GetUserId();
 
-            var model = await _bookService.GetAllBooksAsync(userId);
+            var serviceModel = await _bookService.GetAllBooksAsync(queryModel, userId);
 
-            return View(model);
+            queryModel.Books = serviceModel.Books;
+            queryModel.TotalBooks = serviceModel.TotalBooksCount;
+            queryModel.Categories = await this._categoryService.GetAllCategoryNamesAsync();
+
+            return View(queryModel);
         }
 
         [HttpGet]

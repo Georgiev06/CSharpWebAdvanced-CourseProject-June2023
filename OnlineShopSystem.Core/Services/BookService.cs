@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OnlineShopSystem.Core.Contracts;
 using OnlineShopSystem.Core.Models.Book;
+using OnlineShopSystem.Core.Models.Book.Enum;
 using OnlineShopSystem.Core.Models.Category;
 using OnlineShopSystem.Infrastructure.Common;
 using OnlineShopSystem.Infrastructure.Data.Models;
@@ -22,10 +23,50 @@ namespace OnlineShopSystem.Core.Services
             this._data = dbContext;
         }
 
-        public async Task<IEnumerable<AllBookViewModel>> GetAllBooksAsync(string userId)
+        public async Task<AllBooksFilteredAndPagedServiceModel> GetAllBooksAsync(AllBooksQueryModel queryModel, string userId)
         {
-            return await _data
-                .Books
+            IQueryable<Book> booksQuery = this._data.Books.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(queryModel.Category))
+            {
+                booksQuery = booksQuery.Where(b => b.Category.Name == queryModel.Category);
+            }
+
+            if (!string.IsNullOrWhiteSpace(queryModel.SearchTerm))
+            {
+                booksQuery = booksQuery.Where(b => 
+                    b.Title.ToLower().Contains(queryModel.SearchTerm.ToLower()) || 
+                    b.Author.ToLower().Contains(queryModel.SearchTerm.ToLower()) || 
+                    b.Description.ToLower().Contains(queryModel.SearchTerm.ToLower()));
+            }
+
+            if (queryModel.Sorting != null)
+            {
+                switch (queryModel.Sorting)
+                {
+                    case BookSorting.PriceAscending:
+                        booksQuery = booksQuery.OrderBy(b => b.Price);
+                        break;
+                    case BookSorting.PriceDescending:
+                        booksQuery = booksQuery.OrderByDescending(b => b.Price);
+                        break;
+                    case BookSorting.RatingAscending:
+                        booksQuery = booksQuery.OrderBy(b => b.Rating);
+                        break;
+                    case BookSorting.RatingDescending:
+                        booksQuery = booksQuery.OrderByDescending(b => b.Rating);
+                        break;
+                    case BookSorting.Category:
+                        booksQuery = booksQuery.OrderBy(b => b.Category);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            var books = await booksQuery
+                .Skip((queryModel.CurrentPage - 1) * queryModel.BooksPerPage)
+                .Take(queryModel.BooksPerPage)
                 .Select(b => new AllBookViewModel
                 {
                     Id = b.Id,
@@ -37,7 +78,16 @@ namespace OnlineShopSystem.Core.Services
                     Rating = b.Rating.ToString(),
                     Category = b.Category.Name,
                     UserId = userId
-                }).ToListAsync();
+                })
+                .ToListAsync();
+
+            var totalBooks = booksQuery.Count();
+
+            return new AllBooksFilteredAndPagedServiceModel
+            {
+                Books = books,
+                TotalBooksCount = totalBooks
+            };
         }
 
         public async Task AddBookAsync(string userId, AddBookViewModel model)

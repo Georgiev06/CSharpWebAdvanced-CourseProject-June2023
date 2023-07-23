@@ -29,28 +29,23 @@ namespace OnlineShopSystem.Core.Services
 
             if (cart == null)
             {
-                cart = new ShoppingCart
+                cart = new ShoppingCart()
                 {
                     UserId = userId,
                     Books = new List<Book>()
                 };
 
-                 await _data.ShoppingCart.AddAsync(cart);
+                await _data.ShoppingCart.AddAsync(cart);
+                await _data.SaveChangesAsync();
             }
 
-            var book = await _data.Books.FindAsync(bookId);
+            var book = await _data.Books.FirstOrDefaultAsync(b => b.Id == bookId);
 
-            if (book == null)
-            {   
-                //return;
-            }
-
-            if (!cart.Books.Any(b => b.Id == bookId))
+            if (book != null)
             {
                 cart.Books.Add(book);
+                await _data.SaveChangesAsync();
             }
-
-            await _data.SaveChangesAsync();
         }
 
         public async Task RemoveBookFromCartAsync(string userId, int bookId)

@@ -63,42 +63,55 @@
                                 </div>
                             </div>
                         </div>
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="total-price">Total Price: @Model.TotalPrice</div>
+                                    <button type="button" class="btn btn-warning btn-block btn-lg custom-button">Proceed to Pay</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <button type="button" class="btn btn-warning btn-block btn-lg custom-button text-white">Proceed to Pay</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <style>
+                            .custom-button {
+                                width: 1000px;
+                                font-weight: bold;
+                            }
+                        </style>
                     }
                 }
 
-                @*<div class="card mb-4">
-                <div class="card-body p-4 d-flex flex-row">
-                <div class="form-outline flex-fill">
-                <input type="text" id="form1" class="form-control form-control-lg" />
-                <label class="form-label" for="form1">Discound code</label>
+                @*<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+                <div class="card">
+                <div class="card-body">
+                <div class="total-price">Total Price: @Model.TotalPrice</div>
+                <button type="button" class="btn btn-warning btn-block btn-lg custom-button">Proceed to Pay</button>
                 </div>
-                <button type="button" class="btn btn-outline-warning btn-lg ms-3">Apply</button>
                 </div>
-                </div>*@
-                
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="total-price">Total Price: @Model.TotalPrice</div>
-                            <button type="button" class="btn btn-warning btn-block btn-lg custom-button">Proceed to Pay</button>
-                        </div>
-                    </div>
                 </div>
 
                 <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-                    <div class="card">
-                        <div class="card-body">
-                            <button type="button" class="btn btn-warning btn-block btn-lg custom-button text-white">Proceed to Pay</button>
-                        </div>
-                    </div>
+                <div class="card">
+                <div class="card-body">
+                <button type="button" class="btn btn-warning btn-block btn-lg custom-button text-white">Proceed to Pay</button>
+                </div>
+                </div>
                 </div>
 
                 <style>
-                    .custom-button {
-                        width: 1000px;
-                        font-weight: bold;
-                    }
-                </style>
+                .custom-button {
+                width: 1000px;
+                font-weight: bold;
+                }
+                </style>*@
 
             </div>
         </div>

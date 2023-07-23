@@ -54,6 +54,7 @@ namespace OnlineShopSystem.Web.Controllers
             var userId = GetUserId();
 
             await _cartService.AddBookToCartAsync(userId, bookId);
+            //return RedirectToAction(nameof(ShoppingCartController.Index), "ShoppingCart");
             return RedirectToAction(nameof(Index));
         }
 

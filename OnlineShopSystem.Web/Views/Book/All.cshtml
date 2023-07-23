@@ -1,93 +1,101 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using OnlineShopSystem.Core.Models.Book
-@model IEnumerable<AllBookViewModel>
-@using OnlineShopSystem.Core.Models.Book
-@using System.Security.Claims
+@model AllBooksQueryModel
 
 @{
-    ViewBag.Title = "All Books";
+    ViewBag.Title = "All Houses";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-<div class="text-center row">
-    @foreach (var book in Model)
-    {
-        <div class="card col-4" style="width: 20rem; ">
-            <img class="card-img-top" style="width: 18rem;"
-                 src="@book.ImageUrl" alt="Book Image">
-            <div class="card-body">
-
-                <h5 class="card-title mt-1">@book.Title</h5>
-                <p class="mb-0"><b>Author:</b> @book.Author</p>
-                <p class="mb-0"><b>Rating:</b> @book.Rating</p>
-                <p class="mb-0"><b>Price:</b> $@book.Price</p>
-                <p><b>Category:</b> @book.Category</p>
-            </div>
-
-            @if (User.FindFirstValue(ClaimTypes.NameIdentifier) != @book.UserId)
-            {
-                <form class="input-group-sm" asp-controller="Book" asp-action="AddToFavorites" asp-route-id="@book.Id">
-                    <input type="submit" value="Add to Favorites" class="fs-6 btn btn-outline-info mb-3 p-2"/>
-                </form>
-            }
-
-            <div class="d-grid gap-2">
-                <a asp-controller="Book" asp-action="Details" asp-route-id="@book.Id" class="btn btn-warning">Details</a>
-            </div>
-
-            <form class="mt-2">
-                <div class="d-grid gap-2">
-
-                </div>
-            </form>
-
-            @if (User.FindFirstValue(ClaimTypes.NameIdentifier) == @book.UserId)
-            {
-                <div class="d-grid gap-2">
-                    <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-warning">Edit</a>
-                </div>
-
-                <form class="mt-2" asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id">
-                    <div class="d-grid gap-2">
-                        <input type="submit" value="Delete" class="btn btn-danger mb-2" onclick="myConfirm(event)" />
-                    </div>
-                </form>
-            }
-
-            <div class="d-grid gap-2">
-                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@book.Id" class="btn btn-success">Add to Cart</a>
+<form method="get">
+    <div class="row">
+        <div class="form-group col-md-3 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="Category"></label>
+                <select asp-for="Category" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category">@category</option>
+                    }
+                </select>
             </div>
         </div>
-    }
-</div>
 
-@section Scripts {
-    <script>
-       function myConfirm(e) {
-           e.preventDefault();
-           Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-               icon: 'warning',
-               showCancelButton: true,
-               cancelButtonText: 'Cancel',
-               confirmButtonColor: '#3085d6',
-               cancelButtonColor: '#d33',
-               confirmButtonText: 'Yes, delete it!'
-           }).then((result) => {
-               if (result.isConfirmed) {
-                   Swal.fire(
-                       'Deleted!',
-                        'Your book has been deleted.',
-                        'success'
-                   ).then((resultDeleted) => {
-                       e.target.parentElement.parentElement.submit();
-                   })
-               }
-           })
-       }
-   </script>
+        <div class="form-group col-md-3">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="...">
+        </div>
+
+        <div class="form-group col-md-3">
+            <div class="form-group">
+                <label asp-for="Sorting"></label>
+                <select asp-for="Sorting" class="form-control">
+                    <option value="0">Price (Ascending)</option>
+                    <option value="1">Price (Descending)</option>
+                    <option value="2">Rating (Ascending)</option>
+                    <option value="3">Rating (Descending)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group mt-4 p-2">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@{
+    int previousPage = Model.CurrentPage - 1;
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    int maxPage = (int)Math.Ceiling((double)Model.TotalBooks /
+        Model.BooksPerPage);
 }
 
+<div class="row mb-5">
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+           asp-controller="Book"
+           asp-action="All"
+           asp-route-currentPage="@previousPage"
+           asp-route-category="@Model.Category"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.Sorting)"><<</a>
+    </div>
+
+    @{
+        bool shouldNextPageBeDisabled = Model.CurrentPage == maxPage ||
+            !Model.Books.Any();
+    }
+
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary 
+           @(shouldNextPageBeDisabled ? "disabled" : string.Empty)"
+           asp-controller="Book"
+           asp-action="All"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-category="@Model.Category"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.Sorting)">>></a>
+    </div>
+</div>
+
+@if (!Model.Books.Any())
+{
+    <h2 class="text-center">No houses found by the given criteria!</h2>
+}
+
+<div class="row">
+    @foreach (var book in Model.Books)
+    {
+        <partial name="_BookPartial" model="@book"/>
+    }
+</div>

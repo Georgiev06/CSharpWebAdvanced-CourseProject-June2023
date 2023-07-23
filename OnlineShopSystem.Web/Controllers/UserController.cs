@@ -36,7 +36,7 @@ namespace OnlineShopSystem.Web.Controllers
 
             var user = new User
             {
-                UserName = $"{model.FirstName} {model.LastName}",
+                UserName = model.Email,
                 Email = model.Email,
                 EmailConfirmed = true,
                 FirstName = model.FirstName,
