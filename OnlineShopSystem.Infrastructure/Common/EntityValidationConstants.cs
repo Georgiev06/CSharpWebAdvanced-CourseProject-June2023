@@ -21,9 +21,6 @@ namespace OnlineShopSystem.Infrastructure.Common
 
             public const int ImageUrlMaxLength = 2048;
             public const int ImageUrlMinLength = 20;
-
-            public const int RatingMaxLength = 10;
-            public const int RatingMinLength = 1;
         }
 
         public class Category

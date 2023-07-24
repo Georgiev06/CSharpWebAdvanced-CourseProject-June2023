@@ -8,24 +8,25 @@
 <section class="h-100" style="background-color: #eee;">
     <div class="container h-100 py-5">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-10">
 
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
-                </div>
+            @if (!Model.Items.Any())
+            {
+                <p>Your shopping cart is empty.</p>
+            }
+            else
+            {
+                <div class="col-10">
 
-                <form asp-controller="ShoppingCart" asp-action="ClearCart">
-                    <div class="mt-0">
-                        <input type="submit" value="Clear Cart" class="btn btn-danger mb-2" />
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
                     </div>
-                </form>
 
-                @if (!Model.Items.Any())
-                {
-                    <p>Your shopping cart is empty.</p>
-                }
-                else
-                {
+                    <form asp-controller="ShoppingCart" asp-action="ClearCart">
+                        <div class="mt-0">
+                            <input type="submit" value="Clear Cart" class="btn btn-danger mb-2" />
+                        </div>
+                    </form>
+
                     @foreach (var book in Model.Items)
                     {
                         <div class="card rounded-3 mb-4">
@@ -33,7 +34,7 @@
                                 <div class="row d-flex justify-content-between align-items-center">
                                     <div class="col-md-2 col-lg-2 col-xl-2">
                                         <img src="@book.ImageUrl"
-                                             class="img-fluid rounded-3" alt="Cotton T-shirt">
+                                             class="img-fluid rounded-3" alt="">
                                     </div>
                                     <div class="col-md-3 col-lg-3 col-xl-3">
                                         <p class="lead fw-normal mb-2">@book.Title</p>
@@ -57,39 +58,37 @@
                                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                         <h5 class="mb-0">$@book.Price</h5>
                                     </div>
-                                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                        <a asp-controller="ShoppingCart" asp-action="RemoveFromCart" asp-route-id="@book.Id" class="btn btn-danger"><i class="fas fa-trash fa-lg"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="total-price">Total Price: @Model.TotalPrice</div>
-                                    <button type="button" class="btn btn-warning btn-block btn-lg custom-button">Proceed to Pay</button>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-                            <div class="card">
-                                <div class="card-body">
-                                    <button type="button" class="btn btn-warning btn-block btn-lg custom-button text-white">Proceed to Pay</button>
+                                    <form class="mt-2" asp-controller="ShoppingCart" asp-action="RemoveFromCart" asp-route-bookId="@book.Id">
+                                        <div class="d-grid gap-2">
+                                            <input type="submit" onclick="myConfirm(event)" value="Remove from Cart" class="btn btn-danger mb-2" />
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-
-                        <style>
-                            .custom-button {
-                                width: 1000px;
-                                font-weight: bold;
-                            }
-                        </style>
                     }
-                }
-            </div>
+
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 10vh;">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="total-price">Total Price: $@Model.TotalPrice</div>
+                                <button type="button" class="btn btn-warning btn-block btn-lg custom-button">Proceed to Pay</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <style>
+                        .custom-button {
+                            width: 1000px;
+                            font-weight: bold;
+                        }
+                    </style>
+                </div>
+            }
         </div>
     </div>
 </section>
+
+
 

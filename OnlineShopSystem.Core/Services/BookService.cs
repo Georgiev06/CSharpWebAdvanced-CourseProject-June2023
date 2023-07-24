@@ -96,7 +96,7 @@ namespace OnlineShopSystem.Core.Services
                 Description = model.Description,
                 ImageUrl = model.ImageUrl,
                 Price = model.Price,
-                Rating = decimal.Parse(model.Rating),
+                Rating = model.Rating,
                 CategoryId = model.CategoryId,
             };
 
@@ -135,7 +135,7 @@ namespace OnlineShopSystem.Core.Services
                 book.Description = model.Description;
                 book.ImageUrl = model.ImageUrl;
                 book.Price = model.Price;
-                book.Rating = decimal.Parse(model.Rating);
+                book.Rating = model.Rating;
                 book.CategoryId = model.CategoryId;
 
                 await _data.SaveChangesAsync();
@@ -160,7 +160,7 @@ namespace OnlineShopSystem.Core.Services
                     Description = b.Description,
                     ImageUrl = b.ImageUrl,
                     Price = b.Price,
-                    Rating = b.Rating.ToString(),
+                    Rating = b.Rating,
                     CategoryId = b.CategoryId,
                     Categories = categories
                 }).FirstOrDefaultAsync();
@@ -177,7 +177,7 @@ namespace OnlineShopSystem.Core.Services
                     Author = b.Author,
                     ImageUrl = b.ImageUrl,
                     Description = b.Description,
-                    Rating = b.Rating.ToString(),
+                    Rating = b.Rating,
                     CategoryId = b.CategoryId
                 }).FirstOrDefaultAsync();
         }

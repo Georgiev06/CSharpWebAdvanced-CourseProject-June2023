@@ -42,7 +42,6 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         public decimal Price { get; set; }
 
         [Required]
-        [MaxLength(EntityValidationConstants.Book.RatingMaxLength)]
         public decimal Rating { get; set; }
 
         [Required]
