@@ -18,14 +18,23 @@
 
                 <h5 class="card-title mt-1">@book.Title</h5>
                 <p class="mb-0">Author: @book.Author</p>
-                <p class="mb-0">Description: @book.Description</p>
+                <p class="mb-0">Category: @book.Category</p>
                 <p class="mb-0">Rating: @book.Rating</p>
-                <p class="mb-0">Price: $@book.Price$</p>
-                <p>Category: @book.Category</p>
+                <p class="mb-0">Price: $@book.Price</p>
             </div>
 
-            <form class="input-group-sm" asp-controller="Book" asp-action="RemoveFromFavorites" asp-route-id="@book.Id">
+            <form class="text-centre" asp-controller="Book" asp-action="RemoveFromFavorites" asp-route-id="@book.Id">
                 <input type="submit" value="Remove from Favorites" class="fs-6 btn btn-danger mb-3 p-2" />
+            </form>
+            
+            <div class="d-grid gap-2">
+                <a asp-controller="Book" asp-action="Details" asp-route-id="@book.Id" class="btn btn-success">Details</a>
+            </div>
+            
+            <form class="mt-2" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-bookId="@book.Id">
+                <div class="d-grid gap-2">
+                    <input type="submit" value="Add to Cart" class="btn btn-info mb-2" />
+                </div>
             </form>
         </div>
     }

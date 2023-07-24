@@ -38,6 +38,7 @@ namespace OnlineShopSystem.Web.Controllers
                     Id = book.Id,
                     Title = book.Title,
                     Author = book.Author,
+                    //Category = book.Category.Name,
                     Price = book.Price,
                     ImageUrl = book.ImageUrl,
                     Description = book.Description,

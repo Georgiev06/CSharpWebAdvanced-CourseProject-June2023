@@ -56,9 +56,6 @@ namespace OnlineShopSystem.Core.Services
                     case BookSorting.RatingDescending:
                         booksQuery = booksQuery.OrderByDescending(b => b.Rating);
                         break;
-                    case BookSorting.Category:
-                        booksQuery = booksQuery.OrderBy(b => b.Category);
-                        break;
                     default:
                         break;
                 }

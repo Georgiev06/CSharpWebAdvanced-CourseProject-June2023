@@ -37,7 +37,7 @@
         </div>
     </form>
 
-    <form class="mt-2" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-bookId="@Model.Id">
+    <form asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-bookId="@Model.Id">
         <div class="d-grid gap-2">
             <input type="submit" value="Add to Cart" class="btn btn-info mb-2" />
         </div>

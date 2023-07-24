@@ -42,13 +42,11 @@ namespace OnlineShopSystem.Core.Services
 
             if (book == null)
             {
-                // Handle book not found error
-                // return;
+                return;
             }
 
             if (!cart.Books.Any(b => b.Id == bookId))
             {
-                // Add the book to the cart if it is not already present
                 cart.Books.Add(book);
             }
 
