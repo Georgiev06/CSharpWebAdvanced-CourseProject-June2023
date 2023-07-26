@@ -13,10 +13,19 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.14" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OnlineShopSystem.Core\OnlineShopSystem.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\" />
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\" />
   </ItemGroup>
 
 </Project>
