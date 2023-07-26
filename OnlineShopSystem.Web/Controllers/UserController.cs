@@ -10,12 +10,15 @@ namespace OnlineShopSystem.Web.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public UserController(UserManager<User> _userManager,
-            SignInManager<User> _signInManager)
+            SignInManager<User> _signInManager,
+            RoleManager<IdentityRole> _roleManager)
         {
             userManager = _userManager;
             signInManager = _signInManager;
+            roleManager = _roleManager;
         }
 
         [HttpGet]
@@ -90,12 +93,31 @@ namespace OnlineShopSystem.Web.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        public async Task<IActionResult> CreateRoles()
+        {
+            await roleManager.CreateAsync(new IdentityRole(RoleConstants.RoleConstants.Admin));
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> AddUsersToRoles()
+        {
+            string email = "admin@gmail.com";
+
+            var user = await userManager.FindByNameAsync(email);
+
+
+            await userManager.AddToRolesAsync(user, new string[] { RoleConstants.RoleConstants.Admin });
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

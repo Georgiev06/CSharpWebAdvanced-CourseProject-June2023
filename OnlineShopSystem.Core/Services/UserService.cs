@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OnlineShopSystem.Core.Contracts;
+using OnlineShopSystem.Web.Areas.Admin.Models.User;
 using OnlineShopSystem.Web.Data;
 
 namespace OnlineShopSystem.Core.Services
@@ -28,6 +29,19 @@ namespace OnlineShopSystem.Core.Services
             }
 
             return $"{user.FirstName} {user.LastName}";
+        }
+
+        public async Task<IEnumerable<UsersViewModel>> GetUsersAsync()
+        {
+            var model = await _data.Users.Select(u => new UsersViewModel()
+            {
+                Id = u.Id,
+                Email = u.Email,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+            }).ToListAsync();
+
+            return model;
         }
     }
 }
