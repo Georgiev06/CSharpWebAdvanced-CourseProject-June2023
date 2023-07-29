@@ -1,5 +1,5 @@
 # Book Shop - ASP.NET Core - Project
-### <img src="https://cdn.jsdelivr.net/npm/twemoji@11.3.0/2/svg/1f393.svg" width="30" height="30"> SharpWebAdvanced-CourseProject-June2023 @SoftUni
+### <img src="https://cdn.jsdelivr.net/npm/twemoji@11.3.0/2/svg/1f393.svg" width="30" height="30"> CSharpWebAdvanced-CourseProject-June2023 @SoftUni
 #
 ## <img src="https://cdn.jsdelivr.net/npm/twemoji@11.3.0/2/svg/1f4d1.svg" width="30" height="30"> Project Description
 
