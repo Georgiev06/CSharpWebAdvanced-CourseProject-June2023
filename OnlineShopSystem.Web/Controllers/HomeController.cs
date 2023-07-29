@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopSystem.Web.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineShopSystem.Web.Controllers
 {
@@ -11,6 +12,7 @@ namespace OnlineShopSystem.Web.Controllers
             
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();

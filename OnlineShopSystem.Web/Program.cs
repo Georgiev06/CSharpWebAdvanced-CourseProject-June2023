@@ -21,7 +21,9 @@ builder.Services.AddDefaultIdentity<User>(options =>
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
 
-}).AddRoles<IdentityRole>().AddEntityFrameworkStores<BookShopDbContext>();
+})
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<BookShopDbContext>();
 
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();

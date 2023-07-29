@@ -20,12 +20,14 @@
             </p>
             <p>Category: <b>@Model.Category</b></p>
             <div class="form-inline">
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-warning" asp-controller="Book" asp-action="Edit"
+                       asp-route-id="@Model.Id">Edit</a>
 
-                <a class="btn btn-warning" asp-controller="Book" asp-action="Edit"
-                   asp-route-id="@Model.Id">Edit</a>
-
-                <a class="ml-2 btn btn-danger" onclick="myConfirm(event)" asp-controller="Book" asp-action="Delete"
-                   asp-route-id="@Model.Id">Delete</a>
+                    <a class="ml-2 btn btn-danger" onclick="myConfirm(event)" asp-controller="Book" asp-action="Delete"
+                       asp-route-id="@Model.Id">Delete</a>
+                }
             </div>
         </div>
     </div>

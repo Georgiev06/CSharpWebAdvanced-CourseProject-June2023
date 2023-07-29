@@ -1,5 +1,5 @@
 ﻿using OnlineShopSystem.Core.Models.Category;
-using OnlineShopSystem.Infrastructure.Common;
+using OnlineShopSystem.Infrastructure.Common.EntityValidationConstants;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

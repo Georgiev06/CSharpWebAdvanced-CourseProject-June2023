@@ -4,6 +4,7 @@ using OnlineShopSystem.Core.Contracts;
 using OnlineShopSystem.Core.Models.Book;
 using OnlineShopSystem.Core.Services;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineShopSystem.Web.Controllers
 {

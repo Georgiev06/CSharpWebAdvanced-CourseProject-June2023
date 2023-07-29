@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OnlineShopSystem.Infrastructure.Common;
+using OnlineShopSystem.Infrastructure.Common.EntityValidationConstants;
 
 namespace OnlineShopSystem.Infrastructure.Data.Models
 {

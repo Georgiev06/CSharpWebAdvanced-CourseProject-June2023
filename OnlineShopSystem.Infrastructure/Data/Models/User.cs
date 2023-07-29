@@ -7,7 +7,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using OnlineShopSystem.Infrastructure.Common;
+using OnlineShopSystem.Infrastructure.Common.EntityValidationConstants;
 
 namespace OnlineShopSystem.Infrastructure.Data.Models
 {

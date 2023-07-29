@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OnlineShopSystem.Core.Models.Book;
-using static OnlineShopSystem.Infrastructure.Common.EntityValidationConstants;
+using static OnlineShopSystem.Infrastructure.Common.EntityValidationConstants.EntityValidationConstants;
 using Book = OnlineShopSystem.Infrastructure.Data.Models.Book;
 
 namespace OnlineShopSystem.Core.Services

@@ -1,5 +1,4 @@
-﻿using OnlineShopSystem.Infrastructure.Common;
-using OnlineShopSystem.Infrastructure.Data.Models;
+﻿using OnlineShopSystem.Infrastructure.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OnlineShopSystem.Core.Models.Category;
+using OnlineShopSystem.Infrastructure.Common.EntityValidationConstants;
 
 namespace OnlineShopSystem.Core.Models.Book
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineShopSystem.Infrastructure.Common
+namespace OnlineShopSystem.Infrastructure.Common.EntityValidationConstants
 {
     public class EntityValidationConstants
     {

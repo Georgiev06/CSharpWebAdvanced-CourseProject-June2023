@@ -27,16 +27,20 @@
         <div class="d-grid gap-2">
         </div>
     </form>
-
-    <div class="d-grid gap-2">
-        <a asp-controller="Book" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
-    </div>
-
-    <form class="mt-2" asp-controller="Book" asp-action="Delete" asp-route-id="@Model.Id">
+    
+    @if (User.IsInRole("Admin"))
+    {
         <div class="d-grid gap-2">
-            <input type="submit" onclick="myConfirm(event)" value="Delete" class="btn btn-danger mb-2" />
+            <a asp-controller="Book" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
         </div>
-    </form>
+
+        <form class="mt-2" asp-controller="Book" asp-action="Delete" asp-route-id="@Model.Id">
+            <div class="d-grid gap-2">
+                <input type="submit" onclick="myConfirm(event)" value="Delete" class="btn btn-danger mb-2" />
+            </div>
+        </form>
+        
+    }
 
     <form asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-bookId="@Model.Id">
         <div class="d-grid gap-2">
