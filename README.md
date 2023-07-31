@@ -40,10 +40,6 @@
 ### This page can be accessed only by admin for adding books.
 ## ![image](https://github.com/Georgiev06/CSharpWebAdvanced-CourseProject-June2023/assets/105492506/57d1b534-9d30-48a2-9ec9-638d0ff0f574)
 
-- # Add Book Page / Admin
-### This page can be accessed only by admin for adding books.
-## ![image](https://github.com/Georgiev06/CSharpWebAdvanced-CourseProject-June2023/assets/105492506/57d1b534-9d30-48a2-9ec9-638d0ff0f574)
-
 - # Favorites Books Page
 ### On this page a user can see his books that he likes and wants to buy some day.
 ## ![image](https://github.com/Georgiev06/CSharpWebAdvanced-CourseProject-June2023/assets/105492506/9a490428-8e74-47c3-84a5-e7c18f7049f3)
