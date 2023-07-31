@@ -64,9 +64,11 @@
 
 - # Navigation bar - Admin
 ### ![image](https://github.com/Georgiev06/CSharpWebAdvanced-CourseProject-June2023/assets/105492506/f68782d1-829e-47d9-8511-11d0d5b09dba)
+
+## ❗Important
+### In order to create admin you have to register user with the following email address- "admin@gmail.com" then in the url you have to search: "/User/CreateRoles", "/User/AddUsersToRoles"
 #
 ## <img src="https://cdn.jsdelivr.net/npm/twemoji@11.3.0/2/svg/270d.svg" width="30" height="30"> Author
-
 ## Miroslav Georgiev
 
 ### Give a ⭐ if you like this project!
