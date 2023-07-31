@@ -34,6 +34,7 @@ namespace OnlineShopSystem.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add()
         {
             AddBookViewModel model = await _bookService.GetAddBookModelAsync();
@@ -42,6 +43,7 @@ namespace OnlineShopSystem.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add(AddBookViewModel model)
         {
             var userId = GetUserId();
@@ -57,6 +59,7 @@ namespace OnlineShopSystem.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             EditBookViewModel? model = await _bookService.GetBookByIdForEditAsync(id);
@@ -70,6 +73,7 @@ namespace OnlineShopSystem.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(EditBookViewModel model, int id)
         {
             if (ModelState.IsValid == false)
@@ -91,6 +95,7 @@ namespace OnlineShopSystem.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             await _bookService.DeleteBookAsync(id);

@@ -40,19 +40,14 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Favorites">Favorites</a>
                             </li>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Add">Add Book</a>
-                                </li>
 
-                                @if (User.IsInRole("Manager"))
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="All">All Users</a>
-                                    </li>
-                                }
-                            }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Add">Add Book</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="All">All Users</a>
+                            </li>
                         }
                     </ul>
                     <ul class="navbar-nav flex-grow-2">
@@ -81,6 +76,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
-@await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

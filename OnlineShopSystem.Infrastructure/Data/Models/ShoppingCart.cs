@@ -29,6 +29,7 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         [ForeignKey(nameof(UserId))]
         public User? User { get; set; }
 
+        [Required]
         public virtual ICollection<Book> Books { get; set; }
     }
 }

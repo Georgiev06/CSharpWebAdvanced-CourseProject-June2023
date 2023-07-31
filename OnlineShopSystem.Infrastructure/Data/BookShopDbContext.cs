@@ -25,7 +25,7 @@ namespace OnlineShopSystem.Web.Data
 
         public DbSet<UserBook> UsersBooks { get; set; } = null!;
 
-        public DbSet<ShoppingCart> ShoppingCart { get; set; } = null!;
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; } = null!;
 
         public DbSet<UserOrder> UsersOrders { get; set; } = null!;
 

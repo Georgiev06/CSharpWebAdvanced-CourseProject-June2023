@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineShopSystem.Core.Contracts;
 using OnlineShopSystem.Web.Data;
+using System.Data;
 
 namespace OnlineShopSystem.Web.Areas.Admin.Controllers
 {
@@ -16,6 +18,8 @@ namespace OnlineShopSystem.Web.Areas.Admin.Controllers
             this._data = data;
             this._userService = userService;
         }
+
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> All()
         {
             var allUsers = await _userService.GetUsersAsync();
@@ -30,10 +34,12 @@ namespace OnlineShopSystem.Web.Areas.Admin.Controllers
 
             var isAdmin = await _data.UserRoles.AnyAsync(ur => ur.UserId == id);
 
-            // If the user is not already an admin, add the "Admin" role to the user
+            var adminRole = await _data.Roles.FirstOrDefaultAsync(r => r.Name == "Admin");
+
             if (user != null && !isAdmin)
             {
-                await _data.UserRoles.AddAsync(new IdentityUserRole<string>() { UserId = id});
+                user.IsAdmin = true;
+                await _data.UserRoles.AddAsync(new IdentityUserRole<string>() { UserId = id, RoleId = adminRole.Id});
                 await _data.SaveChangesAsync();
             }
 
@@ -41,14 +47,48 @@ namespace OnlineShopSystem.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteUser(string id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
-            var user = _data.Users.FirstOrDefault(u => u.Id == id);
+            var user = await _data.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+            var stringGuid = Guid.NewGuid().ToString();
 
             if (user != null)
             {
-                _data.Users.Remove(user);
-                _data.SaveChanges();
+                user.FirstName = String.Empty;
+                user.LastName = String.Empty;
+                user.Address = String.Empty;
+                user.Email = String.Empty;
+                user.UserName = stringGuid;
+                user.PasswordHash = String.Empty;
+                user.ShoppingCart = null;
+                user.ShoppingCartId = null;
+                user.NormalizedEmail = String.Empty;
+                user.NormalizedUserName = stringGuid.ToUpper();
+                user.SecurityStamp = String.Empty;
+                user.ConcurrencyStamp = String.Empty;
+                user.IsAdmin = false;
+
+                await _data.SaveChangesAsync();
+            }
+
+            return RedirectToAction("All", "User");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveAdmin(string id)
+        {
+            var user = await _data.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+            var isAdmin = await _data.UserRoles.AnyAsync(ur => ur.UserId == id);
+
+            var adminRole = await _data.Roles.FirstOrDefaultAsync(r => r.Name == "Admin");
+
+            if (user != null && isAdmin)
+            {
+                user.IsAdmin = false;
+                _data.UserRoles.Remove(new IdentityUserRole<string>() { UserId = id, RoleId = adminRole.Id });
+                await _data.SaveChangesAsync();
             }
 
             return RedirectToAction("All", "User");

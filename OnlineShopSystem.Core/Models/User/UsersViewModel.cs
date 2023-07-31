@@ -10,5 +10,6 @@
 
         public string LastName { get; set; } = null!;
 
+        public bool IsAdmin { get; set; }
     }
 }

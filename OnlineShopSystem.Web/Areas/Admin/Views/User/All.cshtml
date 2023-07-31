@@ -25,15 +25,26 @@
                 <td>@user.FirstName</td>
                 <td>@user.LastName</td>
                 <td>
-                    <form method="post" asp-area="Admin" asp-controller="Admin" asp-action="MakeAdmin">
-                        <input type="hidden" name="id" value="@user.Id" />
-                        <button type="submit" class="btn btn-outline-primary">Make Admin</button>
-                    </form>
+                    @if (user.IsAdmin)
+                    {
+                        <form method="post" asp-area="Admin" asp-controller="User" asp-action="RemoveAdmin">
+                            <input type="hidden" name="id" value="@user.Id"/>
+                            <button type="submit" class="btn btn-outline-primary">Remove Admin</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form method="post" asp-area="Admin" asp-controller="User" asp-action="MakeAdmin">
+                            <input type="hidden" name="id" value="@user.Id"/>
+                            <button type="submit" class="btn btn-outline-primary">Make Admin</button>
+                        </form>
+                    }
 
-                    <form method="post" asp-area="Admin" asp-controller="Admin" asp-action="DeleteUser">
-                        <input type="hidden" name="id" value="@user.Id" />
+                    <form method="post" asp-area="Admin" asp-controller="User" asp-action="DeleteUser">
+                        <input type="hidden" name="id" value="@user.Id"/>
                         <button type="submit" class="btn btn-outline-danger">Delete</button>
                     </form>
+
                 </td>
             </tr>
         }

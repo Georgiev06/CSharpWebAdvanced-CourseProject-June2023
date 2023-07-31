@@ -42,21 +42,21 @@
                                         <p class="text-muted mb-2">Rating: @book.Rating</p>
                                     </div>
                                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                        <button class="btn btn-link px-2"
-                                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                            <i class="fas fa-minus"></i>
+                                        <button class="btn btn-link px-2" style="font-size:30px"
+                                                onclick="updateQuantityAndPriceDown(event)">
+                                            <i class="fas fa-minus"><strong> - </strong></i>
                                         </button>
 
-                                        <input id="form1" min="0" name="quantity" value="1" type="number"
-                                               class="form-control form-control-sm" />
+                                        <input id="bookPrice" type="hidden" value="@book.Price" />
+                                        <input id="form1" min="0" max="10" name="quantity" disabled value="1" type="number" class="form-control form-control-sm" />
 
-                                        <button class="btn btn-link px-2"
-                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                            <i class="fas fa-plus"></i>
+                                        <button class="btn btn-link px-2" style="font-size:30px"
+                                                onclick="updateQuantityAndPriceUp(event)">
+                                            <i class="fas fa-plus"><strong> + </strong></i>
                                         </button>
                                     </div>
                                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                        <h5 class="mb-0">$@book.Price</h5>
+                                        <h5 id="totalBookPrice" class="mb-0">$<span>@book.Price</span></h5>
                                     </div>
 
                                     <form class="col-md-1 col-lg-1 col-xl-1 text-end" asp-controller="ShoppingCart" asp-action="RemoveFromCart" asp-route-bookId="@book.Id">
@@ -73,36 +73,11 @@
                     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 10vh;">
                         <div class="card">
                             <div class="card-body">
-                                <div class="total-price">Total Price: $@Model.TotalPrice</div>
+                                <div id="totalPrice" class="total-price">Total Price: $<span>@Model.TotalPrice</span></div>
                                 <button type="button" class="btn btn-warning btn-block btn-lg custom-button">Proceed to Pay</button>
                             </div>
                         </div>
                     </div>
-
-                    <style>
-                        .total-price {
-                            font-size: 20px;
-                            font-weight: bold;
-                            margin-bottom: 10px;
-                        }
-
-                        .custom-button {
-                            width: 1000px;
-                            font-weight: bold;
-                        }
-
-                        .custom-delete-button {
-                            display: inline-block;
-                            background-image: url('https://cdn-icons-png.flaticon.com/128/542/542724.png');
-                            background-size: contain;
-                            text-indent: -9999px;
-                            background-repeat: no-repeat;
-                            width: 28px;
-                            height: 28px;
-                            border: none;
-                            margin-right: 15px;
-                        }
-                    </style>
                 </div>
             }
         </div>
@@ -110,29 +85,7 @@
 </section>
 
 @section Scripts {
-    <script>
-        function myConfirm(e) {
-            e.preventDefault();
-            Swal.fire({
-                title: 'Are you sure?',
-                icon: 'warning',
-                showCancelButton: true,
-                cancelButtonText: 'Cancel',
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, remove it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Removed!',
-                        'Your book has been removed from your shopping cart.',
-                        'success'
-                    ).then((resultDeleted) => {
-                        e.target.parentElement.parentElement.submit();
-                    })
-                }
-            })
-        }
-    </script>
+    <partial name="_ShopingCartScriptPartial"/>
+    <partial name="_DeleteScriptPartial"/>
 }
 

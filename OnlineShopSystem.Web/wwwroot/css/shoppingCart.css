@@ -9,3 +9,36 @@
     line-height: 30px;
     margin-right: 15px;
 }
+
+.total-price {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.custom-button {
+    width: 1000px;
+    font-weight: bold;
+}
+
+.custom-delete-button {
+    display: inline-block;
+    background-image: url('https://cdn-icons-png.flaticon.com/128/542/542724.png');
+    background-size: contain;
+    text-indent: -9999px;
+    background-repeat: no-repeat;
+    width: 28px;
+    height: 28px;
+    border: none;
+    margin-right: 15px;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Google Chrome; Edge; Opera; etc. */
+    margin: 0;
+}

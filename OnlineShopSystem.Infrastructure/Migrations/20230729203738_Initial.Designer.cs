@@ -12,7 +12,7 @@ using OnlineShopSystem.Web.Data;
 namespace OnlineShopSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(BookShopDbContext))]
-    [Migration("20230628192044_Initial")]
+    [Migration("20230729203738_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,21 @@ namespace OnlineShopSystem.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("BookShoppingCart", b =>
+                {
+                    b.Property<int>("BooksId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShoppingCartsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BooksId", "ShoppingCartsId");
+
+                    b.HasIndex("ShoppingCartsId");
+
+                    b.ToTable("BookShoppingCart");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -169,29 +184,36 @@ namespace OnlineShopSystem.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasMaxLength(2048)
                         .HasColumnType("nvarchar(2048)");
 
-                    b.Property<string>("Name")
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Rating")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -248,21 +270,11 @@ namespace OnlineShopSystem.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("TotalAmount")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -295,8 +307,8 @@ namespace OnlineShopSystem.Infrastructure.Migrations
 
                     b.Property<string>("Comment")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("Rating")
                         .HasMaxLength(10)
@@ -313,6 +325,33 @@ namespace OnlineShopSystem.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.ShoppingCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.User", b =>
@@ -344,10 +383,13 @@ namespace OnlineShopSystem.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -363,11 +405,6 @@ namespace OnlineShopSystem.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(127)
-                        .HasColumnType("nvarchar(127)");
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -379,6 +416,9 @@ namespace OnlineShopSystem.Infrastructure.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ShoppingCartId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -398,6 +438,51 @@ namespace OnlineShopSystem.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.UserBook", b =>
+                {
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("BookId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UsersBooks");
+                });
+
+            modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.UserOrder", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("UsersOrders");
+                });
+
+            modelBuilder.Entity("BookShoppingCart", b =>
+                {
+                    b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.Book", null)
+                        .WithMany()
+                        .HasForeignKey("BooksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.ShoppingCart", null)
+                        .WithMany()
+                        .HasForeignKey("ShoppingCartsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -462,25 +547,6 @@ namespace OnlineShopSystem.Infrastructure.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.Order", b =>
-                {
-                    b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.OrderBook", b =>
                 {
                     b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.Book", "Book")
@@ -490,7 +556,7 @@ namespace OnlineShopSystem.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("OrdersBooks")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -519,16 +585,83 @@ namespace OnlineShopSystem.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.User", "User")
+                        .WithOne("ShoppingCart")
+                        .HasForeignKey("OnlineShopSystem.Infrastructure.Data.Models.ShoppingCart", "UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.UserBook", b =>
+                {
+                    b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.Book", "Book")
+                        .WithMany("UsersBooks")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.User", "User")
+                        .WithMany("UsersBooks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.UserOrder", b =>
+                {
+                    b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.Order", "Order")
+                        .WithMany("UsersOrder")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineShopSystem.Infrastructure.Data.Models.User", "User")
+                        .WithMany("UserOrders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.Book", b =>
                 {
                     b.Navigation("OrdersBooks");
 
                     b.Navigation("Reviews");
+
+                    b.Navigation("UsersBooks");
                 });
 
             modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.Category", b =>
                 {
                     b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.Order", b =>
+                {
+                    b.Navigation("OrdersBooks");
+
+                    b.Navigation("UsersOrder");
+                });
+
+            modelBuilder.Entity("OnlineShopSystem.Infrastructure.Data.Models.User", b =>
+                {
+                    b.Navigation("ShoppingCart");
+
+                    b.Navigation("UserOrders");
+
+                    b.Navigation("UsersBooks");
                 });
 #pragma warning restore 612, 618
         }

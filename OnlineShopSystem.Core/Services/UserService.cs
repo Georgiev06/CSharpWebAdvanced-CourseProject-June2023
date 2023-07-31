@@ -33,13 +33,16 @@ namespace OnlineShopSystem.Core.Services
 
         public async Task<IEnumerable<UsersViewModel>> GetUsersAsync()
         {
-            var model = await _data.Users.Select(u => new UsersViewModel()
-            {
-                Id = u.Id,
-                Email = u.Email,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-            }).ToListAsync();
+            var model = await _data.Users
+                .Where(u => !u.Email.Equals(String.Empty) && !u.Email.Equals("admin@gmail.com"))
+                .Select(u => new UsersViewModel()
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    IsAdmin = u.IsAdmin
+                }).ToListAsync();
 
             return model;
         }

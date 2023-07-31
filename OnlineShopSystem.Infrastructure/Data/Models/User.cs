@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -30,6 +31,8 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         [Required]
         [MaxLength(EntityValidationConstants.User.AddressMaxLength)]
         public string Address { get; set; } = null!;
+
+        public bool IsAdmin { get; set; }
 
         public int? ShoppingCartId { get; set; }
 

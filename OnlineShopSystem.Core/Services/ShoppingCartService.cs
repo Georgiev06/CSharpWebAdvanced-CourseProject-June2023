@@ -35,7 +35,7 @@ namespace OnlineShopSystem.Core.Services
                     Books = new List<Book>()
                 };
 
-                await _data.ShoppingCart.AddAsync(cart);
+                await _data.ShoppingCarts.AddAsync(cart);
             }
 
             var book = await _data.Books.FindAsync(bookId);
@@ -84,7 +84,7 @@ namespace OnlineShopSystem.Core.Services
 
         public ShoppingCart GetCartByUserId(string userId)
         {
-            return _data.ShoppingCart
+            return _data.ShoppingCarts
                 .Include(b => b.Books)
                 .FirstOrDefault(c => c.UserId == userId);
         }

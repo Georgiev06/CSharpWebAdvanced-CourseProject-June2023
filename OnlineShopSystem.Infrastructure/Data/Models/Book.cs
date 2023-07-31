@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,6 +18,7 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
             this.Reviews = new HashSet<Review>();
             this.OrdersBooks = new HashSet<OrderBook>();
             this.UsersBooks = new HashSet<UserBook>();
+            this.ShoppingCarts = new HashSet<ShoppingCart>();
         }
 
         [Key]
@@ -49,6 +51,8 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
 
         [ForeignKey(nameof(CategoryId))]
         public virtual Category Category { get; set; } = null!;
+
+        public virtual ICollection<ShoppingCart>? ShoppingCarts { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }
 

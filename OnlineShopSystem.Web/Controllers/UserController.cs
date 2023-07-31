@@ -22,7 +22,8 @@ namespace OnlineShopSystem.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Register()
+        [AllowAnonymous]
+        public IActionResult Register()
         {
             var model = new RegisterViewModel();
 
@@ -30,6 +31,7 @@ namespace OnlineShopSystem.Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid == false)
@@ -46,6 +48,11 @@ namespace OnlineShopSystem.Web.Controllers
                 LastName = model.LastName,
                 Address = model.Address,
             };
+
+            if (user.Email == "admin@gmail.com")
+            {
+                user.IsAdmin = true;
+            }
 
             var result = await userManager.CreateAsync(user, model.Password);
 
@@ -65,6 +72,7 @@ namespace OnlineShopSystem.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login(string? returnUrl = null)
         {
             var model = new LoginViewModel { ReturnUrl = returnUrl };
@@ -73,6 +81,7 @@ namespace OnlineShopSystem.Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -94,6 +103,7 @@ namespace OnlineShopSystem.Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
@@ -101,21 +111,24 @@ namespace OnlineShopSystem.Web.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
+        [HttpGet]
         public async Task<IActionResult> CreateRoles()
         {
             await roleManager.CreateAsync(new IdentityRole(RoleConstants.RoleConstants.Admin));
 
+            await roleManager.CreateAsync(new IdentityRole(RoleConstants.RoleConstants.Manager));
+
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
         public async Task<IActionResult> AddUsersToRoles()
         {
             string email = "admin@gmail.com";
 
             var user = await userManager.FindByNameAsync(email);
 
-
-            await userManager.AddToRolesAsync(user, new string[] { RoleConstants.RoleConstants.Admin });
+            await userManager.AddToRolesAsync(user, new string[] { RoleConstants.RoleConstants.Admin, RoleConstants.RoleConstants.Manager });
 
             return RedirectToAction("Index", "Home");
         }
