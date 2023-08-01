@@ -9,33 +9,41 @@
 
 
 <div class="text-center row">
-    @foreach (var book in Model)
+    
+    @if (!Model.Any())
     {
-        <div class="card col-4" style="width: 20rem; ">
-            <img class="card-img-top" style="width: 18rem;"
-                 src="@book.ImageUrl" alt="Book Image">
-            <div class="card-body">
+        <h2 class="text-center">No books added yet!</h2>
+    }
+    else
+    {
+        @foreach (var book in Model)
+        {
+            <div class="card col-4" style="width: 20rem; ">
+                <img class="card-img-top" style="width: 18rem;"
+                     src="@book.ImageUrl" alt="Book Image">
+                <div class="card-body">
 
-                <h5 class="card-title mt-1">@book.Title</h5>
-                <p class="mb-0">Author: @book.Author</p>
-                <p class="mb-0">Category: @book.Category</p>
-                <p class="mb-0">Rating: @book.Rating</p>
-                <p class="mb-0">Price: $@book.Price</p>
-            </div>
-
-            <form class="text-centre" asp-controller="Book" asp-action="RemoveFromFavorites" asp-route-id="@book.Id">
-                <input type="submit" value="Remove from Favorites" class="fs-6 btn btn-danger mb-3 p-2" />
-            </form>
-            
-            <div class="d-grid gap-2">
-                <a asp-controller="Book" asp-action="Details" asp-route-id="@book.Id" class="btn btn-success">Details</a>
-            </div>
-            
-            <form class="mt-2" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-bookId="@book.Id">
-                <div class="d-grid gap-2">
-                    <input type="submit" value="Add to Cart" class="btn btn-info mb-2" />
+                    <h5 class="card-title mt-1">@book.Title</h5>
+                    <p class="mb-0">Author: @book.Author</p>
+                    <p class="mb-0">Category: @book.Category</p>
+                    <p class="mb-0">Rating: @book.Rating</p>
+                    <p class="mb-0">Price: $@book.Price</p>
                 </div>
-            </form>
-        </div>
+
+                <form class="text-centre" asp-controller="Book" asp-action="RemoveFromFavorites" asp-route-id="@book.Id">
+                    <input type="submit" value="Remove from Favorites" class="fs-6 btn btn-danger mb-3 p-2"/>
+                </form>
+
+                <div class="d-grid gap-2">
+                    <a asp-controller="Book" asp-action="Details" asp-route-id="@book.Id" class="btn btn-success">Details</a>
+                </div>
+
+                <form class="mt-2" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-bookId="@book.Id">
+                    <div class="d-grid gap-2">
+                        <input type="submit" value="Add to Cart" class="btn btn-info mb-2"/>
+                    </div>
+                </form>
+            </div>
+        }
     }
 </div>
