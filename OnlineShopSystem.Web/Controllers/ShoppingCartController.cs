@@ -55,6 +55,9 @@ namespace OnlineShopSystem.Web.Controllers
             var userId = GetUserId();
 
             await _cartService.AddBookToCartAsync(userId, bookId);
+
+            TempData["message"] = "Book added to cart successfully!";
+
             return RedirectToAction("Index", "ShoppingCart");
         }
 
@@ -64,6 +67,9 @@ namespace OnlineShopSystem.Web.Controllers
             var userId = GetUserId();
 
             await _cartService.RemoveBookFromCartAsync(userId, bookId);
+
+            TempData["message"] = "Book removed from cart successfully!";
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -73,6 +79,9 @@ namespace OnlineShopSystem.Web.Controllers
             var userId = GetUserId();
 
             await _cartService.ClearCartAsync(userId);
+
+            TempData["message"] = "Cart cleared successfully!";
+
             return RedirectToAction(nameof(Index));
         }
     }

@@ -43,6 +43,8 @@ namespace OnlineShopSystem.Web.Areas.Admin.Controllers
                 await _data.SaveChangesAsync();
             }
 
+            TempData["Success"] = "User is now admin!";
+
             return RedirectToAction("All", "User");
         }
 
@@ -72,6 +74,8 @@ namespace OnlineShopSystem.Web.Areas.Admin.Controllers
                 await _data.SaveChangesAsync();
             }
 
+            TempData["Success"] = "User is deleted!";
+
             return RedirectToAction("All", "User");
         }
 
@@ -90,6 +94,8 @@ namespace OnlineShopSystem.Web.Areas.Admin.Controllers
                 _data.UserRoles.Remove(new IdentityUserRole<string>() { UserId = id, RoleId = adminRole.Id });
                 await _data.SaveChangesAsync();
             }
+
+            TempData["Success"] = "User is no longer admin!";
 
             return RedirectToAction("All", "User");
         }

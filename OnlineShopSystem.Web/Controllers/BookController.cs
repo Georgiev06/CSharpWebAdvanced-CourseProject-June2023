@@ -55,6 +55,8 @@ namespace OnlineShopSystem.Web.Controllers
 
             await _bookService.AddBookAsync(userId, model);
 
+            TempData["message"] = "Book added successfully!";
+
             return RedirectToAction(nameof(All));
         }
 
@@ -83,6 +85,8 @@ namespace OnlineShopSystem.Web.Controllers
 
             await _bookService.EditBookAsync(model, id);
 
+            TempData["message"] = "Book edited successfully!";
+
             return RedirectToAction(nameof(All));
         }
 
@@ -99,6 +103,8 @@ namespace OnlineShopSystem.Web.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _bookService.DeleteBookAsync(id);
+
+            TempData["message"] = "Book deleted successfully!";
             return RedirectToAction(nameof(All));
         }
 
@@ -127,6 +133,8 @@ namespace OnlineShopSystem.Web.Controllers
 
             await _bookService.AddBookToFavoritesAsync(userId, book);
 
+            TempData["message"] = "Book added to favorites successfully!";
+
             return RedirectToAction(nameof(Favorites));
         }
 
@@ -142,6 +150,8 @@ namespace OnlineShopSystem.Web.Controllers
 
             var userId = GetUserId();
             await _bookService.RemoveBookFromFavoritesAsync(userId, book);
+
+            TempData["message"] = "Book removed from favorites successfully!";
 
             return RedirectToAction(nameof(Favorites));
         }
