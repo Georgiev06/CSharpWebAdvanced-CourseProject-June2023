@@ -1,14 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using Moq;
-using Moq.Language.Flow;
-using NUnit.Framework.Internal;
 using OnlineShopSystem.Core.Models.Book;
-using OnlineShopSystem.Core.Models.Book.Enum;
-using OnlineShopSystem.Core.Models.Category;
 using OnlineShopSystem.Core.Services;
 using OnlineShopSystem.Infrastructure.Data.Models;
 using OnlineShopSystem.Tests.SeedData;
-using OnlineShopSystem.Web.Data;
 
 namespace OnlineShopSystem.Tests.UnitTests
 {
