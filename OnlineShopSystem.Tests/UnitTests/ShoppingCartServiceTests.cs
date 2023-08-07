@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using OnlineShopSystem.Core.Models.Book;
-using OnlineShopSystem.Core.Services;
+﻿using OnlineShopSystem.Core.Services;
 using OnlineShopSystem.Infrastructure.Data.Models;
 using OnlineShopSystem.Tests.SeedData;
 
@@ -324,6 +317,5 @@ namespace OnlineShopSystem.Tests.UnitTests
             Assert.AreEqual(result.Id, shoppingCart.Id);
             Assert.AreEqual(result.User.Id, shoppingCart.User.Id);
         }
-
     }
 }
