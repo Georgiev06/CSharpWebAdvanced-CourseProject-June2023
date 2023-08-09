@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using OnlineShopSystem.Core.Contracts;
 using OnlineShopSystem.Core.Models.Book;
 using OnlineShopSystem.Core.Models.Book.Enum;
 using OnlineShopSystem.Core.Models.Category;
+using OnlineShopSystem.Core.Models.Review;
 using OnlineShopSystem.Infrastructure.Common;
 using OnlineShopSystem.Infrastructure.Data.Models;
 using OnlineShopSystem.Web.Data;
@@ -254,6 +256,35 @@ namespace OnlineShopSystem.Core.Services
                 _data.UsersBooks.Remove(userBook);
                 await _data.SaveChangesAsync();
             }
+        }
+
+        public async Task AddReviewAsync(AddReviewViewModel review)
+        {
+            var reviewToAdd = new Review
+            {
+                UserId = review.UserId,
+                BookId = review.BookId,
+                Comment = review.Comment,
+                Rating = review.Rating
+            };
+
+            await _data.Reviews.AddAsync(reviewToAdd);
+            await _data.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<ReviewViewModel>> GetReviewAsync(int bookId)
+        {
+            return await _data.Reviews
+                .Where(r => r.BookId == bookId)
+                .Select(r => new ReviewViewModel
+                {
+                    Id = r.Id,
+                    UserId = r.UserId,
+                    BookId = r.BookId,
+                    Content = r.Comment,
+                    Rating = r.Rating,
+                    UserUsername = r.User.FirstName + " " + r.User.LastName
+                }).ToListAsync();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OnlineShopSystem.Core.Models.Review;
 
 namespace OnlineShopSystem.Core.Contracts
 {
@@ -20,5 +21,8 @@ namespace OnlineShopSystem.Core.Contracts
         Task<DetailsBookViewModel> BookDetailsByIdAsync(int id);
         Task AddBookToFavoritesAsync(string userId, BookViewModel book);
         Task RemoveBookFromFavoritesAsync(string userId, BookViewModel book);
+        Task AddReviewAsync(AddReviewViewModel review);
+        Task<IEnumerable<ReviewViewModel>> GetReviewAsync(int bookId);
+
     }
 }

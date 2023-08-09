@@ -4,7 +4,9 @@ using OnlineShopSystem.Core.Contracts;
 using OnlineShopSystem.Core.Models.Book;
 using OnlineShopSystem.Core.Services;
 using System.Xml.Linq;
+using Ganss.Xss;
 using Microsoft.AspNetCore.Authorization;
+using OnlineShopSystem.Core.Models.Review;
 
 namespace OnlineShopSystem.Web.Controllers
 {
@@ -95,6 +97,10 @@ namespace OnlineShopSystem.Web.Controllers
         {
             var bookModel = await _bookService.BookDetailsByIdAsync(id);
 
+            var allReviews = await _bookService.GetReviewAsync(id);
+
+            bookModel.Reviews = allReviews;
+
             return View(bookModel);
         }
 
@@ -107,7 +113,6 @@ namespace OnlineShopSystem.Web.Controllers
             TempData["message"] = "Book deleted successfully!";
             return RedirectToAction(nameof(All));
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Favorites()
@@ -154,6 +159,35 @@ namespace OnlineShopSystem.Web.Controllers
             TempData["message"] = "Book removed from favorites successfully!";
 
             return RedirectToAction(nameof(Favorites));
+        }
+
+        [HttpGet]
+        public IActionResult CreateReview(int bookId)
+        {
+            var userId = GetUserId();
+
+            var model = new AddReviewViewModel()
+            {
+                UserId = userId,
+                BookId = bookId,
+            };
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddReview(AddReviewViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View("CreateReview", model);
+            }
+
+            await this._bookService.AddReviewAsync(model);
+
+            TempData["message"] = "Review added successfully!";
+
+            return RedirectToAction(nameof(Details), new DetailsBookViewModel {Id = model.BookId});
         }
 
         private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier);

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using OnlineShopSystem.Core.Models.Review;
+using OnlineShopSystem.Infrastructure.Data.Models;
 
 namespace OnlineShopSystem.Core.Models.Book
 {
@@ -23,5 +26,7 @@ namespace OnlineShopSystem.Core.Models.Book
         public string Rating { get; set; } = null!;
 
         public string Category { get; set; } = null!;
+
+        public virtual IEnumerable<ReviewViewModel> Reviews { get; set; } = new List<ReviewViewModel>();
     }
 }

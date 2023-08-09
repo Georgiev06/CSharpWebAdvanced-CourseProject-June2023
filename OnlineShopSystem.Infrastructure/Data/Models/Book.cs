@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using OnlineShopSystem.Infrastructure.Common.EntityValidationConstants;

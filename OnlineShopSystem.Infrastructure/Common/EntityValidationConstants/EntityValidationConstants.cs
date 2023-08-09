@@ -35,7 +35,7 @@ namespace OnlineShopSystem.Infrastructure.Common.EntityValidationConstants
             public const int RatingMinLength = 1;
 
             public const int CommentMaxLength = 200;
-            public const int CommentMinLength = 15;
+            public const int CommentMinLength = 5;
         }
 
         public class User
