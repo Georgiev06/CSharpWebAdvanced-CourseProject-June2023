@@ -89,7 +89,7 @@ namespace OnlineShopSystem.Core.Services
             };
         }
 
-        public async Task AddBookAsync(string userId, AddBookViewModel model)
+        public async Task AddBookAsync(AddBookViewModel model)
         {
             Book book = new Book()
             {
@@ -105,8 +105,8 @@ namespace OnlineShopSystem.Core.Services
             await _data.Books.AddAsync(book);
             await _data.SaveChangesAsync();
 
-            var bookById = await GetBookByIdAsync(book.Id);
-            await AddBookToFavoritesAsync(userId, bookById);
+            //var bookById = await GetBookByIdAsync(book.Id);
+            //await AddBookToFavoritesAsync(userId, bookById);
         }
 
         public async Task<AddBookViewModel> GetAddBookModelAsync()

@@ -74,7 +74,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div id="totalPrice" class="total-price">Total Price: $<span>@Model.TotalPrice</span></div>
-                                <button type="button" onclick="myConfirm(event)" class="btn btn-warning btn-block btn-lg custom-button">Proceed to Pay</button>
+                                <button type="button" onclick="proceedToPay(e)" class="btn btn-warning btn-block btn-lg custom-button">Proceed to Pay</button>
                             </div>
                         </div>
                     </div>
@@ -87,6 +87,5 @@
 @section Scripts {
     <partial name="_ShopingCartScriptPartial"/>
     <partial name="_DeleteScriptPartial"/>
-    <partial name="_ProceedToPayPartial"/>
 }
 

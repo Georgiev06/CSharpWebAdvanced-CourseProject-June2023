@@ -21,13 +21,9 @@ namespace OnlineShopSystem.Web.Data
 
         public DbSet<Order> Orders { get; set; } = null!;
 
-        public DbSet<OrderBook> OrdersBooks { get; set; } = null!;
-
         public DbSet<UserBook> UsersBooks { get; set; } = null!;
 
         public DbSet<ShoppingCart> ShoppingCarts { get; set; } = null!;
-
-        public DbSet<UserOrder> UsersOrders { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -54,19 +50,8 @@ namespace OnlineShopSystem.Web.Data
                 Name = "Thriller"
             });
 
-            builder.Entity<OrderBook>()
-                .HasKey(x => new { x.BookId, x.OrderId });
-
             builder.Entity<UserBook>()
                 .HasKey(x => new { x.BookId, x.UserId });
-
-            builder.Entity<UserOrder>()
-                .HasKey(x => new { x.UserId, x.OrderId });
-
-            builder.Entity<OrderBook>()
-                .HasOne(x => x.Book)
-                .WithMany(x => x.OrdersBooks)
-                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<User>()
                 .HasOne(u => u.ShoppingCart)

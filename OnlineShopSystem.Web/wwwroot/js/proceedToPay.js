@@ -1,4 +1,4 @@
-﻿function myConfirm(e) {
+﻿function proceedToPay(e) {
     e.preventDefault();
     Swal.fire({
         title: 'Order Submitted!',

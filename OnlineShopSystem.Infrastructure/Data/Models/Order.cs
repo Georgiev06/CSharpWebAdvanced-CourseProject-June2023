@@ -12,8 +12,8 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
     {
         public Order()
         {
-            this.UsersOrder = new HashSet<UserOrder>();
-            this.OrdersBooks = new HashSet<OrderBook>();
+            this.Books = new HashSet<Book>();
+            this.Users = new HashSet<User>();
         }
 
         [Key]
@@ -22,8 +22,14 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         [Required]
         public decimal TotalAmount { get; set; }
 
-        public virtual ICollection<OrderBook> OrdersBooks { get; set; }
+        [Required]
+        public string UserFirstName { get; set; } = null!;
 
-        public virtual ICollection<UserOrder> UsersOrder { get; set; } = null!;
+        [Required]
+        public string UserLastName { get; set; } = null!;
+
+        public virtual ICollection<Book> Books { get; set; }
+
+        public virtual ICollection<User> Users { get; set; }
     }
 }

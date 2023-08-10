@@ -11,7 +11,7 @@ namespace OnlineShopSystem.Core.Contracts
     public interface IBookService
     {
         Task<AllBooksFilteredAndPagedServiceModel> GetAllBooksAsync(AllBooksQueryModel queryModel, string userId);
-        Task AddBookAsync(string userId, AddBookViewModel model);
+        Task AddBookAsync( AddBookViewModel model);
         Task<AddBookViewModel> GetAddBookModelAsync();
         Task EditBookAsync(EditBookViewModel model, int id);
         Task<EditBookViewModel?> GetBookByIdForEditAsync(int id);

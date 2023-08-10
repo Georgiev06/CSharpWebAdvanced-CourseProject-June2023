@@ -17,7 +17,7 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
         public User()
         {
             this.UsersBooks = new HashSet<UserBook>();
-            this.UserOrders = new HashSet<UserOrder>();
+            this.Orders = new HashSet<Order>();
         }
 
         [Required]
@@ -40,6 +40,6 @@ namespace OnlineShopSystem.Infrastructure.Data.Models
 
         public virtual ICollection<UserBook>? UsersBooks { get; set; }
 
-        public virtual ICollection<UserOrder> UserOrders { get; set; } = null!;
+        public virtual ICollection<Order>? Orders { get; set; }
     }
 }

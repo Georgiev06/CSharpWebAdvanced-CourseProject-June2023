@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OnlineShopSystem.Core.Contracts;
 using OnlineShopSystem.Core.Models.Book;
-using OnlineShopSystem.Core.Services;
-using System.Xml.Linq;
-using Ganss.Xss;
 using Microsoft.AspNetCore.Authorization;
 using OnlineShopSystem.Core.Models.Review;
 
@@ -48,14 +45,12 @@ namespace OnlineShopSystem.Web.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add(AddBookViewModel model)
         {
-            var userId = GetUserId();
-
             if (ModelState.IsValid == false)
             {
                 return View(model);
             }
 
-            await _bookService.AddBookAsync(userId, model);
+            await _bookService.AddBookAsync(model);
 
             TempData["message"] = "Book added successfully!";
 
