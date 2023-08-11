@@ -56,11 +56,14 @@
                             }
                         }
                     </ul>
-                    <ul class="navbar-nav flex-grow-2">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark shopping-cart-icon" asp-area="" asp-controller="ShoppingCart" asp-action="Index"></a>
-                        </li>
-                    </ul>
+                    @if (User.Identity?.IsAuthenticated ?? false)
+                    {
+                        <ul class="navbar-nav flex-grow-2">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark shopping-cart-icon" asp-area="" asp-controller="ShoppingCart" asp-action="Index"></a>
+                            </li>
+                        </ul>
+                    }
                     <partial name="_LoginPartial"/>
                 </div>
             </div>

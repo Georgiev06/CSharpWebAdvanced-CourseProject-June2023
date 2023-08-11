@@ -28,8 +28,11 @@
                     <a class="btn btn-warning" asp-controller="Book" asp-action="Edit"
                        asp-route-id="@Model.Id">Edit</a>
 
-                    <a class="ml-2 btn btn-danger" onclick="myConfirm(event)" asp-controller="Book" asp-action="Delete"
-                       asp-route-id="@Model.Id">Delete</a>
+                    <form asp-controller="Book" asp-action="Delete" asp-route-id="@Model.Id">
+                        <div class="d-grid gap-2">
+                            <input type="submit" onclick="myConfirm(event)" value="Delete" class="custom-delete-button-details" />
+                        </div>
+                    </form>
                 }
             </div>
         </div>
@@ -73,6 +76,18 @@
         </div>
     </div>
 </div>
+
+<style>
+    .custom-delete-button-details {
+        height: 39px;
+        margin-left: 155px;
+        margin-top: -41px;
+        width: 56px;
+        color: white;
+        background-color: #dc3545;
+        border: none;
+    }
+</style>
 
 @section Scripts {
     <partial name="_DeleteScriptPartial" />

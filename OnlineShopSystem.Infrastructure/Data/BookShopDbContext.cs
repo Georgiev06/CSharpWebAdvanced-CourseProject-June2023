@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OnlineShopSystem.Infrastructure.Data.Models;
-using System.Reflection.Emit;
-using Microsoft.AspNetCore.Identity;
 
 namespace OnlineShopSystem.Web.Data
 {

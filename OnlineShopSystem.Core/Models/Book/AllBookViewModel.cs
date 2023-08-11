@@ -1,14 +1,4 @@
-﻿using OnlineShopSystem.Infrastructure.Common;
-using OnlineShopSystem.Infrastructure.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OnlineShopSystem.Core.Models.Book
+﻿namespace OnlineShopSystem.Core.Models.Book
 {
     public class AllBookViewModel
     {

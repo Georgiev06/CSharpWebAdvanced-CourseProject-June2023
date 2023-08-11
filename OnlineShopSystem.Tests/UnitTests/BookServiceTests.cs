@@ -31,7 +31,7 @@ namespace OnlineShopSystem.Tests.UnitTests
                 Rating = (decimal)7.98
             };
 
-            await bookService.AddBookAsync(user.Id, book);
+            await bookService.AddBookAsync(book);
 
             Assert.That(dbContext.Books.Count(), Is.EqualTo(1));
         }
@@ -59,7 +59,7 @@ namespace OnlineShopSystem.Tests.UnitTests
                 Rating = (decimal)7.98
             };
 
-            await bookService.AddBookAsync(user.Id, book);
+            await bookService.AddBookAsync(book);
 
             Assert.That(dbContext.Books.Count(), Is.EqualTo(1));
         }
@@ -106,7 +106,7 @@ namespace OnlineShopSystem.Tests.UnitTests
             var dbContext = DatabaseMock.Instance;
             var bookService = new BookService(dbContext);
 
-            await bookService.AddBookAsync("0e5e63f5-8ce3-4815-bc73-189fb1a33aee", new AddBookViewModel()
+            await bookService.AddBookAsync(new AddBookViewModel()
             {
                 Title = "Harry Potter and the Sorcerer's Stone",
                 Author = "J.K. Rowling",
@@ -177,7 +177,7 @@ namespace OnlineShopSystem.Tests.UnitTests
             var dbContext = DatabaseMock.Instance;
             var bookService = new BookService(dbContext);
 
-            await bookService.AddBookAsync("0e5e63f5-8ce3-4815-bc73-189fb1a33aee", new AddBookViewModel()
+            await bookService.AddBookAsync(new AddBookViewModel()
             {
                 Title = "Harry Potter and the Sorcerer's Stone",
                 Author = "J.K. Rowling",
@@ -220,7 +220,7 @@ namespace OnlineShopSystem.Tests.UnitTests
             var dbContext = DatabaseMock.Instance;
             var bookService = new BookService(dbContext);
 
-            await bookService.AddBookAsync("0e5e63f5-8ce3-4815-bc73-189fb1a33aee", new AddBookViewModel()
+            await bookService.AddBookAsync(new AddBookViewModel()
             {
                 Title = "Harry Potter and the Sorcerer's Stone",
                 Author = "J.K. Rowling",
@@ -257,7 +257,7 @@ namespace OnlineShopSystem.Tests.UnitTests
             var dbContext = DatabaseMock.Instance;
             var bookService = new BookService(dbContext);
 
-            await bookService.AddBookAsync("0e5e63f5-8ce3-4815-bc73-189fb1a33aee", new AddBookViewModel()
+            await bookService.AddBookAsync(new AddBookViewModel()
             {
                 Title = "Harry Potter and the Sorcerer's Stone",
                 Author = "J.K. Rowling",
@@ -291,7 +291,7 @@ namespace OnlineShopSystem.Tests.UnitTests
             var dbContext = DatabaseMock.Instance;
             var bookService = new BookService(dbContext);
 
-            await bookService.AddBookAsync("0e5e63f5-8ce3-4815-bc73-189fb1a33aee", new AddBookViewModel()
+            await bookService.AddBookAsync(new AddBookViewModel()
             {
                 Title = "Harry Potter and the Sorcerer's Stone",
                 Author = "J.K. Rowling",
@@ -318,7 +318,7 @@ namespace OnlineShopSystem.Tests.UnitTests
             var dbContext = DatabaseMock.Instance;
             var bookService = new BookService(dbContext);
 
-            await bookService.AddBookAsync("0e5e63f5-8ce3-4815-bc73-189fb1a33aee", new AddBookViewModel()
+            await bookService.AddBookAsync(new AddBookViewModel()
             {
                 Title = "Harry Potter and the Sorcerer's Stone",
                 Author = "J.K. Rowling",
@@ -345,7 +345,7 @@ namespace OnlineShopSystem.Tests.UnitTests
             var dbContext = DatabaseMock.Instance;
             var bookService = new BookService(dbContext);
 
-            await bookService.AddBookAsync("0e5e63f5-8ce3-4815-bc73-189fb1a33aee", new AddBookViewModel()
+            await bookService.AddBookAsync(new AddBookViewModel()
             {
                 Title = "Harry Potter and the Sorcerer's Stone",
                 Author = "J.K. Rowling",
@@ -385,7 +385,7 @@ namespace OnlineShopSystem.Tests.UnitTests
             var dbContext = DatabaseMock.Instance;
             var bookService = new BookService(dbContext);
 
-            await bookService.AddBookAsync("0e5e63f5-8ce3-4815-bc73-189fb1a33aee", new AddBookViewModel()
+            await bookService.AddBookAsync(new AddBookViewModel()
             {
                 Title = "Harry Potter and the Sorcerer's Stone",
                 Author = "J.K. Rowling",
@@ -412,7 +412,7 @@ namespace OnlineShopSystem.Tests.UnitTests
             var dbContext = DatabaseMock.Instance;
             var bookService = new BookService(dbContext);
 
-            await bookService.AddBookAsync("0e5e63f5-8ce3-4815-bc73-189fb1a33aee", new AddBookViewModel()
+            await bookService.AddBookAsync(new AddBookViewModel()
             {
                 Title = "Harry Potter and the Sorcerer's Stone",
                 Author = "J.K. Rowling",
@@ -441,7 +441,7 @@ namespace OnlineShopSystem.Tests.UnitTests
             var dbContext = DatabaseMock.Instance;
             var bookService = new BookService(dbContext);
 
-            await bookService.AddBookAsync("0e5e63f5-8ce3-4815-bc73-189fb1a33aee", new AddBookViewModel()
+            await bookService.AddBookAsync(new AddBookViewModel()
             {
                 Title = "Harry Potter and the Sorcerer's Stone",
                 Author = "J.K. Rowling",
@@ -469,7 +469,7 @@ namespace OnlineShopSystem.Tests.UnitTests
             var dbContext = DatabaseMock.Instance;
             var bookService = new BookService(dbContext);
 
-            await bookService.AddBookAsync("0e5e63f5-8ce3-4815-bc73-189fb1a33aee", new AddBookViewModel()
+            await bookService.AddBookAsync(new AddBookViewModel()
             {
                 Title = "Harry Potter and the Sorcerer's Stone",
                 Author = "J.K. Rowling",
@@ -481,7 +481,7 @@ namespace OnlineShopSystem.Tests.UnitTests
                 Rating = (decimal)7.98
             });
 
-            await bookService.AddBookAsync("0e5e63f5-8ce3-4815-bc73-189fb1a33aee", new AddBookViewModel()
+            await bookService.AddBookAsync(new AddBookViewModel()
             {
                 Title = "No Country for Old Men",
                 Author = "Cormac McCarthy",

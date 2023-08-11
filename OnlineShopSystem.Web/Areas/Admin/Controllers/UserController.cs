@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineShopSystem.Core.Contracts;
 using OnlineShopSystem.Web.Data;
-using System.Data;
 
 namespace OnlineShopSystem.Web.Areas.Admin.Controllers
 {

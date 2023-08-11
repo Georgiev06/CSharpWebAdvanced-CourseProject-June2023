@@ -1,11 +1,4 @@
-﻿using OnlineShopSystem.Core.Models.Cart;
-using OnlineShopSystem.Infrastructure.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using OnlineShopSystem.Infrastructure.Data.Models;
 namespace OnlineShopSystem.Core.Contracts
 {
     public interface IShoppingCartService

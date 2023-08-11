@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using OnlineShopSystem.Core.Contracts;
 using OnlineShopSystem.Core.Models.Book;
 using OnlineShopSystem.Core.Models.Book.Enum;
 using OnlineShopSystem.Core.Models.Category;
 using OnlineShopSystem.Core.Models.Review;
-using OnlineShopSystem.Infrastructure.Common;
 using OnlineShopSystem.Infrastructure.Data.Models;
 using OnlineShopSystem.Web.Data;
 
@@ -98,9 +91,10 @@ namespace OnlineShopSystem.Core.Services
                 Description = model.Description,
                 ImageUrl = model.ImageUrl,
                 Price = model.Price,
-                Rating = model.Rating,
+                Rating = 0M,
                 CategoryId = model.CategoryId,
             };
+
 
             await _data.Books.AddAsync(book);
             await _data.SaveChangesAsync();
@@ -270,6 +264,12 @@ namespace OnlineShopSystem.Core.Services
 
             await _data.Reviews.AddAsync(reviewToAdd);
             await _data.SaveChangesAsync();
+
+            var book = await _data.Books.FirstOrDefaultAsync(b => b.Id == review.BookId);
+
+            book!.Rating = GetAverageRating(review.BookId);
+            await _data.SaveChangesAsync();
+            
         }
 
         public async Task<IEnumerable<ReviewViewModel>> GetReviewAsync(int bookId)
@@ -285,6 +285,20 @@ namespace OnlineShopSystem.Core.Services
                     Rating = r.Rating,
                     UserUsername = r.User.FirstName + " " + r.User.LastName
                 }).ToListAsync();
+        }
+
+        private decimal GetAverageRating(int bookId)
+        {
+            if (_data.Reviews.Count() == null || _data.Reviews.Count() == 0)
+            {
+                return 0;
+            }
+
+            var averageRating = _data.Reviews
+                .Where(r => r.BookId == bookId)
+                .Average(r => r.Rating);
+
+            return (decimal)averageRating;
         }
     }
 }

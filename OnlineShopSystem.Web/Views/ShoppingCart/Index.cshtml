@@ -61,7 +61,7 @@
 
                                     <form class="col-md-1 col-lg-1 col-xl-1 text-end" asp-controller="ShoppingCart" asp-action="RemoveFromCart" asp-route-bookId="@book.Id">
                                         <div class="d-grid gap-2">
-                                            <input type="submit" onclick="myConfirm(event)" class="custom-delete-button" />
+                                            <input type="submit" onclick="myConfirm(event)" class="custom-delete-button"/>
                                         </div>
                                     </form>
 
@@ -74,7 +74,17 @@
                         <div class="card">
                             <div class="card-body">
                                 <div id="totalPrice" class="total-price">Total Price: $<span>@Model.TotalPrice</span></div>
-                                <button type="button" onclick="proceedToPay(e)" class="btn btn-warning btn-block btn-lg custom-button">Proceed to Pay</button>
+                                @*<form asp-controller="ShoppingCart" asp-action="ProceedToPay" method="post">
+                                    <div class="d-grid gap-2">
+                                        <input type="submit" onclick="proceedToPay(event)" class="btn btn-warning btn-block btn-lg custom-button" value="Proceed To Pay" />
+                                    </div>
+                                </form>*@
+                                @*<button type="submit" class="btn btn-warning btn-block btn-lg custom-button">Proceed to Pay</button>*@
+                                <form asp-controller="ShoppingCart" asp-action="ProceedToPay" method="post">
+                                    <div class="d-grid gap-2">
+                                        <input type="submit" onclick="proceedToPay(event)" class="btn btn-warning btn-block btn-lg custom-button" value="Proceed To Pay" />
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -87,5 +97,6 @@
 @section Scripts {
     <partial name="_ShopingCartScriptPartial"/>
     <partial name="_DeleteScriptPartial"/>
+    <partial name="_ProceedToPayPartial"/>
 }
 

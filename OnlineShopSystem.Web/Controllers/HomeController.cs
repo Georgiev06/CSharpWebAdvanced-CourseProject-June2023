@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopSystem.Web.Models;
-using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineShopSystem.Web.Controllers
